@@ -14,7 +14,14 @@ new class extends Component {
 
 <div class="container mx-auto max-w-[700px]">
 
-   
+    @if (session('registered'))
+        <x-alert 
+            title="{!! session('registered') !!}" 
+            icon="s-rocket-launch" 
+            class="mb-4 alert-info" 
+            dismissible 
+        />
+    @endif
   
      
     <x-card  title="Présentation de l'agence" >

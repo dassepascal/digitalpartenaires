@@ -9,17 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
-use App\Models\Shop;
 
 class UserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
-    Public Agence $agence;
+    public Agence $agence;
 
-    public function __construct()
+    public function __construct(Agence $agence = null)
     {
-        $this->agence = Agence::firstOrFail();
+        // Si aucune agence n'est passée, utilise la première ou une valeur par défaut
+        $this->agence = $agence ?? Agence::first() ?? new Agence(['name' => 'Agence par défaut', 'email' => 'no-reply@example.com']);
     }
 
     public function envelope(): Envelope
@@ -33,7 +33,7 @@ class UserRegistered extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.registered',
+            view: 'mails.registered', // Assurez-vous que cette vue existe
         );
     }
 
