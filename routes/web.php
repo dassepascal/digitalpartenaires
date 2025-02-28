@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Volt::route('/', 'index');
 
+// route contact
+Volt::route('/contact', 'contact')->name('contact');
+
 Route::middleware('guest')->group(function () {
     Volt::route('/register', 'auth.register');
     Volt::route('/login', 'auth.login')->name('login');
