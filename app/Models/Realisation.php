@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,4 +22,9 @@ class Realisation extends Model
       
        
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'realisation_category');
+    }
 }

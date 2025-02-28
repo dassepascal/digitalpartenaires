@@ -11,4 +11,9 @@ class Category extends Model
     protected $fillable = ['name'];
 
     public $timestamps = false;
+
+    public function realisations()
+    {
+        return $this->belongsToMany(Realisation::class, 'realisation_category');
+    }
 }
