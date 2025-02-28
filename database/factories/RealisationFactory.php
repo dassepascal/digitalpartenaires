@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Realisation;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,6 +11,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RealisationFactory extends Factory
 {
+
+
+    protected $model = Realisation::class;
     /**
      * Define the model's default state.
      *

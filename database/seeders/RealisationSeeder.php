@@ -13,7 +13,7 @@ class RealisationSeeder extends Seeder
         // Créez des catégories si elles n'existent pas déjà
         $categories = Category::all();
         if ($categories->isEmpty()) {
-            $categories = Category::factory()->count(3)->create([
+            $categories = Category::create([
                 ['name' => 'E-commerce'],
                 ['name' => 'Site vitrine'],
                 ['name' => 'Blog'],
