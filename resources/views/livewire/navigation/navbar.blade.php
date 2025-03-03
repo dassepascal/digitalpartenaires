@@ -29,7 +29,7 @@ new class extends Component {
         </a>
     </x-slot:brand>
 
-   
+
 
     <!-- Actions à droite -->
     <x-slot:actions>
@@ -48,7 +48,25 @@ new class extends Component {
                     </span>
                 </x-dropdown>
             @else
-                <x-button label="{{ __('Login') }}" link="/login" class="btn-ghost flex items-center " />
+                <div class="flex space-x-2 items-center justify-start">
+                    <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
+                        {{-- By default any click closes dropdown --}}
+                        <x-menu-item title="E-commerce" link="#" />
+                     
+                        <x-menu-separator />
+                     
+                        <x-menu-item title="Site vitrine" link="#"/>
+                     
+                       
+                     
+                        <x-menu-separator />
+                     
+                        <x-menu-item title="Blog" link="#"/>
+                     
+                       
+                    </x-dropdown>
+                    <x-button label="{{ __('Login') }}" link="/login" class="btn-outline flex items-center hover:bg-gray-300" />
+                </div>
             @endif
         </span>
     </x-slot:actions>

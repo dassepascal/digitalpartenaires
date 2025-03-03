@@ -50,7 +50,7 @@
     <livewire:navigation.footer />
     <br>
     <x-toast />
-
+    @livewireScripts
 </body>
 
 </html>
