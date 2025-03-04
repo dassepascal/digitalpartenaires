@@ -24,7 +24,7 @@ new class extends Component {
         <x-slot:figure>
             <img src="https://picsum.photos/500/200" />
         </x-slot:figure>
-        <h3 class="text-1xl font-bold mb-4">Optimisation pour les moteurs de recherche (SEO)</h3>
+        <h3 class="text-1xl font-bold mb-4">Optimisation pour les moteurs de recherche (SEO).</h3>
         <p>L'amélioration du référencement (SEO) d'un site est essentielle pour augmenter la visibilité de votre PME. Un
             site bien structuré avec des balises de titre pertinentes, des meta descriptions précises, et des liens
             internes et externes de qualité, augmente sa visibilité sur les moteurs de recherche. Un tel site web permet
@@ -32,13 +32,13 @@ new class extends Component {
             meilleur rang, augmentant ainsi les chances d'attirer des utilisateurs.</p>
 
 
-        <h3 class="text-1xl font-bold my-4">Importance de l'apparence professionnelle </h3>
+        <h3 class="text-1xl font-bold my-4">Importance de l'apparence professionnelle. </h3>
         <p>Un site vitrine conçu professionnellement constitue un levier clé pour booster l'image de marque de votre
             PME. Un design attractif et réfléchi, une interface utilisateur intuitive, et une présentation claire de
             votre entreprise et de vos produits ou services, peuvent grandement influencer la décision d'un visiteur de
             faire affaire avec vous.</p>
 
-        <h3 class="text-1xl font-bold my-4">Utilisation des médias sociaux pour augmenter la visibilité</h3>
+        <h3 class="text-1xl font-bold my-4">Utilisation des médias sociaux pour augmenter la visibilité.</h3>
         <p>La présence active sur les réseaux sociaux est un atout important pour toute PME. Un site vitrine peut servir
             de plateforme idéale pour partager du contenu et interagir avec votre public sur ces réseaux. En le liant à
             vos comptes de médias sociaux, vous pouvez diriger les utilisateurs vers votre site, augmentant ainsi sa
@@ -50,14 +50,14 @@ new class extends Component {
         <p>Un site vitrine vous permet de proposer un contenu informatif et attrayant qui met en valeur vos produits ou
             services. Ce contenu peut être optimisé avec des mots-clés pertinents, ce qui améliore votre SEO, attire
             plus de visiteurs sur votre site et augmente la probabilité de conversions.</p>
-        <h3 class="text-1xl font-bold my-4">Importance d'un design convivial pour le commerce en ligne </h3>
+        <h3 class="text-1xl font-bold my-4">Importance d'un design convivial pour le commerce en ligne. </h3>
         <p>Un design convivial facilite la navigation, encourage le visiteur à passer plus de temps sur votre site et
             augmente les chances de conversions. De plus, un site vitrine vous offre la possibilité de présenter vos
             produits de manière attrayante, avec des descriptions détaillées et des images de haute qualité.</p>
-        <h3 class="text-1xl font-bold my-4">Intégration d'appels à l'action pour stimuler les conversions </h3>
+        <h3 class="text-1xl font-bold my-4">Intégration d'appels à l'action pour stimuler les conversions. </h3>
         <p>Il existe de nombreux exemples de PME qui ont vu leur visibilité et leurs ventes augmenter grâce à leur site
             vitrine. (Ici, vous pouvez mentionner des noms ou des histoires spécifiques.)</p>
-        <h3 class="text-1xl font-bold my-4">Des gains quantifiables grâce à un site vitrine </h3>
+        <h3 class="text-1xl font-bold my-4">Des gains quantifiables grâce à un site vitrine. </h3>
         <p>De nombreuses études montrent que les PME qui investissent dans un site vitrine performant peuvent augmenter
             significativement leurs ventes et leur visibilité. <br>
         <span class="font-bold">Léa Nature: plus de 2.5 fois plus de ventes.</span><br>
@@ -67,7 +67,7 @@ new class extends Component {
         Cette PME spécialisée dans la création de bijoux artisanaux a élargi sa clientèle au-delà de sa région grâce à un site vitrine attractif, permettant des expéditions à l'international. 
 
         </p>
-        <h2 class="text-2xl font-bold my-4">Conclusion : Pourquoi chaque PME devrait envisager de posséder un site vitrine</h2>
+        <h2 class="text-2xl font-bold my-4">Conclusion : Pourquoi chaque PME devrait envisager de posséder un site vitrine.</h2>
 
         <p>Posséder un site vitrine n'est plus un luxe pour les PME, c'est désormais une nécessité. En plus d'augmenter
             la visibilité de l'entreprise, il aide à convertir les visiteurs en clients, à renforcer la crédibilité de
