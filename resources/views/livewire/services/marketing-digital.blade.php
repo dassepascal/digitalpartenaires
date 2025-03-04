@@ -14,7 +14,7 @@ new class extends Component {
 
         <!-- Section droite avec le texte -->
         <div class="p-10 flex flex-col justify-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-pink-400 mb-6">Introduction au<br> marketing digital</h1>
+            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6">Introduction au<br> marketing digital</h1>
             <p class="text-lg mb-6">
                 Le marketing digital est devenu une composante essentielle de la stratégie de toute entreprise moderne.
                 Il s'agit de l'ensemble des actions marketing menées à travers les canaux numériques, tels que les sites
@@ -32,7 +32,7 @@ new class extends Component {
     </div>
 
     <div class="container mx-auto p-8">
-        <h1 class="text-4xl font-bold text-pink-500 mb-6">Définition et importance du marketing digital</h1>
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6">Définition et importance du marketing digital</h1>
 
         <p class="mb-8 text-gray-300">
             Le marketing digital englobe toutes les stratégies marketing utilisant des canaux numériques. Il s'agit
@@ -69,7 +69,7 @@ new class extends Component {
         </div>
 
 
-        <h1 class="text-4xl font-bold text-pink-400 mb-6 mt-10">Les 7 points clés du marketing digital</h1>
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6 mt-5">Les 7 points clés du marketing digital</h1>
         <p class="mb-8">Maîtriser les 7 points clés du marketing digital permet aux entreprises de construire une
             stratégie solide et de maximiser leurs résultats. Ces éléments interdépendants doivent être soigneusement
             considérés pour atteindre les objectifs marketing.</p>
@@ -150,7 +150,7 @@ new class extends Component {
     </div>
 
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-red-400 mb-6">1. Stratégie et objectifs</h1>
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6 mt-5">1. Stratégie et objectifs</h1>
         <p class="mb-6">La première étape cruciale du marketing digital consiste à définir une stratégie claire et des objectifs précis. Il est essentiel d'identifier les cibles, leurs besoins et leurs motivations, et d’élaborer une stratégie cohérente pour atteindre les résultats souhaités. Cela implique de définir les objectifs SMART (<span class="text-blue-400">Specific, Measurable, Achievable, Relevant, Time-bound</span>) et de choisir les canaux numériques les plus pertinents pour atteindre le public cible.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -178,7 +178,7 @@ new class extends Component {
     </div>
 
     <div class="container mx-auto p-8">
-        <h2 class="text-2xl font-bold text-purple-400 mb-4">2. Création de contenu de qualité</h2>
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6 mt-5">2. Création de contenu de qualité</h1>
         <p class="mb-6">Créer du contenu pertinent, engageant et de haute qualité est essentiel pour captiver l’attention du public et l’inciter à interagir avec la marque. Il est important de comprendre les besoins et les intérêts du public cible, et de créer du contenu qui répond à ces attentes.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -203,33 +203,33 @@ new class extends Component {
 
     <div class="container mx-auto px-4 py-8">
         <!-- En-tête -->
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">3. Optimisation du référencement (SEO)</h1>
-        <p class="text-gray-600 mb-8">
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-700  to-violet-500 mb-6 mt-5">3. Optimisation du référencement (SEO)</h1>
+        <p>
             L'optimisation du référencement (SEO) est essentielle pour améliorer la visibilité du site web sur les moteurs de recherche. Il s'agit de mettre en place des stratégies pour améliorer le classement du site dans les résultats de recherche, ce qui permet d'attirer un trafic qualifié et de générer des leads. L'objectif est de rendre le site web plus pertinent et plus accessible pour les moteurs de recherche.
         </p>
 
         <!-- Cartes de contenu -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-3 gap-6 mt-5">
             <!-- On-Page -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class=" bg-gray-800 p-6 rounded-lg">
                 <h2 class="text-xl font-semibold text-blue-600 mb-4">Optimisation On-Page</h2>
-                <p class="text-gray-600">
+                <p class="">
                     Comprend l'optimisation du contenu du site web, la structure du site, les mots-clés et les balises médi pour améliorer la visibilité et l'attractivité du site.
                 </p>
             </div>
 
             <!-- Off-Page -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="bg-gray-800 p-6 rounded-lg">
                 <h2 class="text-xl font-semibold text-green-600 mb-4">Optimisation Off-Page</h2>
-                <p class="text-gray-600">
+                <p>
                     Se concentre sur les actions menées en dehors du site web, comme la construction de liens, la présence sur les réseaux sociaux et la création de contenu de qualité pour améliorer la réputation et la visibilité du site.
                 </p>
             </div>
 
             <!-- Analyse -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="bg-gray-800 p-6 rounded-lg">
                 <h2 class="text-xl font-semibold text-purple-600 mb-4">Analyse et suivi</h2>
-                <p class="text-gray-600">
+                <p>
                     Il est essentiel de suivre les performances SEO, d'analyser les résultats et d'adapter les stratégies en fonction des insights obtenus pour maximiser l'impact.
                 </p>
             </div>
