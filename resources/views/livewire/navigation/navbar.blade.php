@@ -50,26 +50,33 @@ new class extends Component {
             @else
                 <div class="flex space-x-2 items-center justify-start">
                     <x-menu class="">
-                        <x-menu-item title="Portfolio" link="{{ route('portfolio')}}" class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300"/>
+                        <x-menu-item title="Portfolio" link="{{ route('portfolio') }}"
+                            class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
                     </x-menu>
                     <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
                         {{-- By default any click closes dropdown --}}
-                        <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}" class="btn-outline hover:text-white hover:bg-gray-300" />
-                     
+                        <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}"
+                            class="btn-outline hover:text-white hover:bg-gray-300" />
+
                         <x-menu-separator />
-                     
-                        <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine')}}" class=" btn-outline hover:text-white" />
-                     
-                       
-                     
+
+                        <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine') }}"
+                            class=" btn-outline hover:text-white" />
+
+
+
                         <x-menu-separator />
-                     
-                        <x-menu-item title="Blog" link="{{ route('services.blog')}}" class=" btn-outline hover:text-white"/>
-                     
-                       
+
+                        <x-menu-item title="Blog" link="{{ route('services.blog') }}"
+                            class=" btn-outline hover:text-white" />
+                        <x-menu-separator />
+                        <x-menu-item title='Marketing Digital' link="{{ route('services.marketing-digital') }}"
+                            class="btn-outline hover:bg-gray-300 hover:text-white" />
                     </x-dropdown>
-                  
-                    <x-button label="{{ __('Login') }}" link="/login" class="btn-outline flex items-center hover:bg-gray-300" />
+
+
+                    <x-button label="{{ __('Login') }}" link="/login"
+                        class="btn-outline flex items-center hover:bg-gray-300 " />
                 </div>
             @endif
         </span>
