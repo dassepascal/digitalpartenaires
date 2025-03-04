@@ -51,17 +51,17 @@ new class extends Component {
                 <div class="flex space-x-2 items-center justify-start">
                     <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
                         {{-- By default any click closes dropdown --}}
-                        <x-menu-item title="E-commerce" link="#" />
+                        <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}" class="btn-outline hover:text-white hover:bg-gray-300" />
                      
                         <x-menu-separator />
                      
-                        <x-menu-item title="Site vitrine" link="#"/>
+                        <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine')}}" class=" btn-outline hover:text-white" />
                      
                        
                      
                         <x-menu-separator />
                      
-                        <x-menu-item title="Blog" link="#"/>
+                        <x-menu-item title="Blog" link="{{ route('services.blog')}}" class=" btn-outline hover:text-white"/>
                      
                        
                     </x-dropdown>
