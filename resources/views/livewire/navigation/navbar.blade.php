@@ -49,6 +49,9 @@ new class extends Component {
                 </x-dropdown>
             @else
                 <div class="flex space-x-2 items-center justify-start">
+                    <x-menu class="">
+                        <x-menu-item title="Portfolio" link="{{ route('portfolio')}}" class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300"/>
+                    </x-menu>
                     <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
                         {{-- By default any click closes dropdown --}}
                         <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}" class="btn-outline hover:text-white hover:bg-gray-300" />
@@ -65,6 +68,7 @@ new class extends Component {
                      
                        
                     </x-dropdown>
+                  
                     <x-button label="{{ __('Login') }}" link="/login" class="btn-outline flex items-center hover:bg-gray-300" />
                 </div>
             @endif
