@@ -73,7 +73,10 @@ new class extends Component {
                         <x-menu-item title='Marketing Digital' link="{{ route('services.marketing-digital') }}"
                             class="btn-outline hover:bg-gray-300 hover:text-white" />
                     </x-dropdown>
-
+                    <x-menu class="">
+                        <x-menu-item title="Contact" link="{{ route('contact') }}"
+                            class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
+                    </x-menu>
 
                     <x-button label="{{ __('Login') }}" link="/login"
                         class="btn-outline flex items-center hover:bg-gray-300 " />

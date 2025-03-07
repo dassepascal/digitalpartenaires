@@ -11,6 +11,7 @@ Volt::route('services/blog','services.blog')->name('services.blog');
 Volt::route('services/marketing-digital','services.marketing-digital')->name('services.marketing-digital');
 Volt::route('portfolio','portfolio')->name('portfolio');
 
+
 // route contact
 Volt::route('/contact', 'contact')->name('contact');
 
