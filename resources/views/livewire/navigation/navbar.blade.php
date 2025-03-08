@@ -34,6 +34,36 @@ new class extends Component {
     <!-- Actions à droite -->
     <x-slot:actions>
         <span class="hidden lg:block">
+            <div class="flex space-x-2 items-center justify-start">
+            <x-menu class="">
+                <x-menu-item title="Portfolio" link="{{ route('portfolio') }}"
+                    class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
+            </x-menu>
+            <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
+                {{-- By default any click closes dropdown --}}
+                <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}"
+                    class="btn-outline hover:text-white hover:bg-gray-300" />
+
+                <x-menu-separator />
+
+                <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine') }}"
+                    class=" btn-outline hover:text-white" />
+
+
+
+                <x-menu-separator />
+
+                <x-menu-item title="Blog" link="{{ route('services.blog') }}"
+                    class=" btn-outline hover:text-white" />
+                <x-menu-separator />
+                <x-menu-item title='Marketing Digital' link="{{ route('services.marketing-digital') }}"
+                    class="btn-outline hover:bg-gray-300 hover:text-white" />
+            </x-dropdown>
+            <x-menu class="">
+                <x-menu-item title="Contact" link="{{ route('contact') }}"
+                    class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
+            </x-menu>
+           
             @if ($user = auth()->user())
                 <x-dropdown>
                     <x-slot:trigger>
@@ -47,40 +77,14 @@ new class extends Component {
                         <x-menu-item title="{{ __('Logout') }}" wire:click="logout" />
                     </span>
                 </x-dropdown>
+                
             @else
-                <div class="flex space-x-2 items-center justify-start">
-                    <x-menu class="">
-                        <x-menu-item title="Portfolio" link="{{ route('portfolio') }}"
-                            class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
-                    </x-menu>
-                    <x-dropdown label="Services" class="btn-outline hover:bg-gray-300">
-                        {{-- By default any click closes dropdown --}}
-                        <x-menu-item title="E-commerce" link="{{ route('services.e-commerce') }}"
-                            class="btn-outline hover:text-white hover:bg-gray-300" />
-
-                        <x-menu-separator />
-
-                        <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine') }}"
-                            class=" btn-outline hover:text-white" />
-
-
-
-                        <x-menu-separator />
-
-                        <x-menu-item title="Blog" link="{{ route('services.blog') }}"
-                            class=" btn-outline hover:text-white" />
-                        <x-menu-separator />
-                        <x-menu-item title='Marketing Digital' link="{{ route('services.marketing-digital') }}"
-                            class="btn-outline hover:bg-gray-300 hover:text-white" />
-                    </x-dropdown>
-                    <x-menu class="">
-                        <x-menu-item title="Contact" link="{{ route('contact') }}"
-                            class="btn-outline font-bold border py-3 hover:text-white flex items-center hover:bg-gray-300" />
-                    </x-menu>
+                
+                    
 
                     <x-button label="{{ __('Login') }}" link="/login"
                         class="btn-outline flex items-center hover:bg-gray-300 " />
-                </div>
+               
             @endif
         </span>
     </x-slot:actions>
