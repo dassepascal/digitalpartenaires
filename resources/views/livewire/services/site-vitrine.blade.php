@@ -22,7 +22,7 @@ new class extends Component {
 
 
         <x-slot:figure>
-            <img src="https://picsum.photos/500/200" />
+            <img src="{{ asset('storage/photos/site-vitrine.jpeg') }}" />
         </x-slot:figure>
         <h3 class="text-1xl font-bold mb-4">Optimisation pour les moteurs de recherche (SEO).</h3>
         <p>L'amélioration du référencement (SEO) d'un site est essentielle pour augmenter la visibilité de votre PME. Un

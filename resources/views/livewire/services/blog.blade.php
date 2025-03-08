@@ -19,7 +19,7 @@ new class extends Component {
        
 
         <x-slot:figure>
-            <img src="https://picsum.photos/500/200" />
+            <img src="{{ asset('storage/photos/blog.jpg') }}" />
         </x-slot:figure>
         <h3 class="font-bold mb-2">Augmentation de la visibilité en ligne grâce à un blog d'entreprise.</h3>
         <p class="mb-4">Un blog d'entreprise est un outil puissant pour améliorer votre classement SEO (Search Engine Optimization).
