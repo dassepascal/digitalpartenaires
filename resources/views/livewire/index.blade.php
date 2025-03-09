@@ -25,12 +25,12 @@ new class extends Component {
   
      
     <x-card  title="Présentation de l'agence" >
-        I am using slots here.
+        
      
         <x-slot:figure>
             <img src="{{ asset('storage/photos/pre2.jpg')}}" alt="pre2" />
         </x-slot:figure>
-        <div class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae praesentium dicta quis quam dolorum aperiam sint excepturi maxime maiores. Dolor velit, molestias sit similique vel modi vero iure optio mollitia!</div>
+        <div class="text-justify">Digital Partenaire a été fondé en 2025 par Dasse Pascal, un passionné de digital et de technologies web, avec pour objectif d'aider les entreprises locales à se développer en ligne.</div>
    
    
     </x-card>

@@ -32,57 +32,44 @@ new class extends Component {
             'subject' => $this->subject,
             'informationRequest' => $this->informationRequest, // Ajout des choix dans les données
         ];
-     
 
         Mail::send(new \App\Mail\ContactMail($data));
 
-
         $this->success('Votre demande a été envoyée avec succès !', position: 'toast-top toast-center');
-       
 
         $this->reset(['name', 'firstname', 'email', 'subject', 'informationRequest']);
     }
 };
 ?>
 
-<div class="container mx-auto p-5">
+<div style="max-width: 700px; margin: 0 auto;">
     <x-card class="w-full shadow-md shadow-gray-500" shadow separator>
         <h1 class="text-2xl font-bold mb-6">{{ __('Contactez-nous') }}</h1>
 
         <form wire:submit="submit">
             <div class="grid gap-6 md:grid-cols-2">
                 <x-input wire:model="name" label="{{ __('Nom') }}" placeholder="{{ __('Entrez votre nom') }}"
-                    required />
+                    required /></br>
                 <x-input wire:model="firstname" label="{{ __('Prénom') }}" placeholder="{{ __('Entrez votre prénom') }}"
-                    required />
+                    required /></br>
                 <x-input wire:model="email" type="email" label="{{ __('Email') }}"
-                    placeholder="{{ __('Entrez votre email') }}" required />
-                <x-input wire:model="subject" label="{{ __('Objet de la demande') }}"
-                    placeholder="{{ __('Entrez l\'objet de votre demande') }}" required />
+                    placeholder="{{ __('Entrez votre email') }}" required /></br>
+                <x-textarea wire:model="subject" label="{{ __('Objet de la demande') }}"
+                    placeholder="{{ __('Objet de votre demande') }}" required />
             </div>
 
             <!-- Nouvelle section pour les checkbox -->
             <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Demande d\'information') }}</label>
+                <h2 class="text-lg font-bold mb-2"> {{ __('Informations demandées') }} </h2>
                 <div class="space-y-2">
-                    <x-checkbox 
-                        label="{{ __('Site vitrine') }}"
-                        wire:model="informationRequest"
-                        value="site-vitrine"
-                    />
-                    <x-checkbox 
-                        label="{{ __('E-commerce') }}"
-                        wire:model="informationRequest"
-                        value="e-commerce"
-                    />
-                    <x-checkbox 
-                        label="{{ __('Marketing digital') }}"
-                        wire:model="informationRequest"
-                        value="marketing-digital"
-                    />
+                    <x-checkbox label="{{ __('Site vitrine') }}" wire:model="informationRequest"
+                        value="site-vitrine" />
+                    <x-checkbox label="{{ __('E-commerce') }}" wire:model="informationRequest" value="e-commerce" />
+                    <x-checkbox label="{{ __('Marketing digital') }}" wire:model="informationRequest"
+                        value="marketing-digital" />
                 </div>
-                @error('informationRequest') 
-                    <span class="text-red-500 text-sm">{{ $message }}</span> 
+                @error('informationRequest')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
