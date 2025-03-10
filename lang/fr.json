@@ -279,7 +279,6 @@
     "To find out about your rights regarding the personal data you entrust to us, please consult our Privacy Policy": "Pour connaître vos droits concernant les données personnelles que vous nous confiez, veuillez consulter notre politique de confidentialité",
     "Profile updated with success.": "Profil mis à jour avec succès.",
     "Please fill in only if you wish to change your password. Otherwise leave blank.": "Veuillez remplir seulement si vous souhaitez changer votre mot de passe. Sinon laissez vide.",
-   
     "It is a professionnal address": "C'est une adresse professionnelle",
     "Create an address": "Création d'une adresse",
     "Company name": "Raison sociale",
@@ -295,5 +294,12 @@
     "Address updated with success.": "Adresse mise à jour avec succès.",
     "Name": "Nom",
     "FirstName": "Prénom",
-    "Address created successfully.": "Adresse créee avec succès."
+    "Address created successfully.": "Adresse créee avec succès.",
+    "In a glance": "En un coup d'oeil",
+    "Dashboard": "Tableau de bord",
+    "Active products": "Produits actifs",
+    "Validated orders": "Commandes validées",
+    "Customers": "Clients",
+    "Go on agence": "Aller sur agence",
+    "Successful orders": "Commandes validées"
 }

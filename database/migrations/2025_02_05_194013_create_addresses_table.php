@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->boolean('professionnal')->default(false);
-            $table->enum('civility', ['M', 'Mme']);
+            $table->enum('civility', ['M', 'Mme', 'M.']);
             $table->string('name', 100)->nullable();
             $table->string('firstname', 100)->nullable();
             $table->string('company', 100)->nullable();
