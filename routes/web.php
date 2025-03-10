@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function () {
         ->prefix('admin')
         ->group(function () {
             Volt::route('/dashboard', 'admin.index')->name('admin');
+            Volt::route('/pages', 'admin.parameters.pages.index')->name('admin.parameters.pages.index');
         });
 });

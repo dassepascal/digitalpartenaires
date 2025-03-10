@@ -301,5 +301,9 @@
     "Validated orders": "Commandes validées",
     "Customers": "Clients",
     "Go on agence": "Aller sur agence",
-    "Successful orders": "Commandes validées"
+    "Successful orders": "Commandes validées",
+    "Create a new page": "Création d'une nouvelle page",
+    "Page created successfully.": "Page crée avec succès.",
+    "Are you sure you want to delete this page?": "Voulez-vous vraiment supprimer cette page ?",
+    "Page deleted successfully.": "Page supprimée avec succès."
 }
