@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,26 +12,26 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class UserFactory extends Factory
 {
-    protected $model = User::class;
+    // protected $model = User::class;
+    protected static ?string $password;
 
     public function definition(): array
     {
         return [
-            'name' => $this->faker->lastName,
-            'firstname' => $this->faker->firstName,
-            'email' => $this->faker->unique()->safeEmail,
-           
-            'password' => 'password', // password
-            
-            'newsletter' => $this->faker->boolean,
-            'role' => 'user',
+           'name' => fake()->lastName,
+            'firstname' => fake()->firstName,
+            'email' => fake()->unique()->safeEmail,
+            'password' => static::$password ??= Hash::make('password'),
+            'newsletter' => fake()->boolean(),
+            'created_at' => fake()->dateTimeBetween('-4 years', '-6 months'),
+            'remember_token' => Str::random(10),
         ];
     }
 
-    public function admin(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'admin',
-        ]);
-    }
-}
+    // public function admin(): static
+    // {
+    //     return $this->state(fn (array $attributes) => [
+    //         'role' => 'admin',
+    //     ]);
+    // }
+}  
