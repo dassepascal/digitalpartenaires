@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
+use App\Models\Country;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,35 +12,24 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AddressFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Address::class;
+
     public function definition(): array
     {
-        $professionnal = fake()->boolean();
-
-        if(!$professionnal || ($professionnal && fake()->boolean())) {
-            $name = fake()->lastName;
-            $firstName = fake()->firstName;
-        } else {
-            $name = null;
-            $firstName = null;
-        }
         return [
-            'professionnal' => $professionnal,
-            'civility' => fake()->boolean() ? 'Mme': 'M.',
-            'name' => $name,
-            'firstname' => $firstName,
-            'company' => $professionnal ? fake()->company : null,
-            'address' => fake()->streetAddress,
-            'addressbis' => fake()->boolean() ? fake()->secondaryAddress : null,
-            'bp' => fake()->boolean() ? fake()->numberBetween(100, 900) : null,
-            'postal' => fake()->numberBetween(10000, 90000),
-            'city' => fake()->city,
-            'country_id' => mt_rand(1, 4),
-            'phone' => fake()->numberBetween(1000000000, 9000000000),
+            'professionnal' => $this->faker->boolean,
+            'civility' => $this->faker->randomElement(['M', 'Mme', 'M.']),
+            'name' => $this->faker->lastName,
+            'firstname' => $this->faker->firstName,
+            'company' => $this->faker->boolean ? $this->faker->company : null, // 50% de chance d'avoir une entreprise
+            'address' => $this->faker->streetAddress,
+            'addressbis' => $this->faker->boolean(30) ? $this->faker->secondaryAddress : null, // 30% de chance d'avoir une adresse secondaire
+            'bp' => $this->faker->boolean(20) ? $this->faker->postcode : null, // 20% de chance d'avoir une boîte postale
+            'postal' => $this->faker->postcode,
+            'city' => $this->faker->city,
+            'phone' => $this->faker->phoneNumber,
+            'user_id' => User::factory(), // Crée un utilisateur ou associe un utilisateur existant
+            'country_id' => Country::inRandomOrder()->first()->id ?? Country::factory(), // Sélectionne un pays existant ou en
         ];
     }
 }

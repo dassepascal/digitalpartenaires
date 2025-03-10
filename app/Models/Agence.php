@@ -35,3 +35,4 @@ class Agence extends Model
 
     public $timestamps = false;
 }
+

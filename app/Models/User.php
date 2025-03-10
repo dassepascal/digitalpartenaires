@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,7 +24,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name', 'firstname', 'email', 'password', 'newsletter',
+        'name', 'firstname', 'email', 'password', 'newsletter','role'
        
     ];
 
@@ -56,6 +58,6 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return 'admin' ;
+        return $this->role === 'admin' ;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Agence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AgenceFactory extends Factory
 {
+
+    protected $model = Agence::class;
     /**
      * Define the model's default state.
      *
@@ -20,16 +23,21 @@ class AgenceFactory extends Factory
             'name' => fake()->sentence(2),
             'address' => fake()->address,
             'email' => fake()->email,
-            'phone' => fake()->phoneNumber,
-            'holder' => strtoupper(fake()->sentence(3)),
+            'phone' =>fake()->phoneNumber,
+           'holder' => strtoupper(fake()->sentence(3)),
             'bic' => strtoupper(str()->random(8)),
             'iban' => fake()->iban,
             'bank' => fake()->sentence(2),
             'bank_address' => fake()->address,
-            'facebook' => fake()->url,
+            'facebook' => 'https://www.facebook.com/' . fake()->userName(),
             'home' => fake()->sentence(3),
             'home_infos' => fake()->text,
-            'home_shipping' => fake()->text,
+            'home_shipping' => fake()->boolean(),
+            'invoice' => fake()->boolean(),
+            'card' => fake()->boolean(),
+            'transfer' => fake()->boolean(),
+            'check' => fake()->boolean(),
+            'mandat' => fake()->boolean(),
         ];
     }
 }
