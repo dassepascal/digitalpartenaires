@@ -15,10 +15,7 @@ class extends Component
     public function with(): array
 	{
 		return [
-			'productsCount' => Product::count(),
-			'ordersCount'   => Order::whereRelation('state', 'indice', '>', 3)
-                                    ->whereRelation('state', 'indice', '<', 6)
-                                    ->count(),
+			
 			'usersCount'    => User::count(),
 		];
 	}
@@ -30,7 +27,7 @@ class extends Component
         <x-slot:heading>
             @lang('In a glance')
         </x-slot:heading>
-        <x-slot:content class="flex flex-wrap gap-4">
+        {{-- <x-slot:content class="flex flex-wrap gap-4">
             <a href="/" class="flex-grow">
                 <x-stat 
                     title="{{ __('Active products') }}" 
@@ -55,6 +52,6 @@ class extends Component
                     icon="s-user"
                     class="shadow-hover" />
             </a>
-        </x-slot:content>
+        </x-slot:content> --}}
     </x-collapse>
 </div>
