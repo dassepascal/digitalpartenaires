@@ -3,10 +3,18 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
+
+
+    public string $title = 'E-commerce';
+    public string $name = '';
+    public string $firstname = '';
+
 }; ?>
 
 <div style="max-width: 700px; margin: 0 auto;">
+    {{-- title --}}
+    <x-header title="E-commerce"  separator />
+    
     <x-card title="Boostez vos ventes avec l'e-commerce: Le guide ultime pour les PME et les entreprises." shadow separator>
         <p>Que vous dirigiez une PME ou envisagiez de lancer votre entreprise, l'e-commerce est devenu une nécessité
             plutôt qu'une option. Avec l'énorme potentiel que recèle Internet, augmenter vos ventes n'a jamais été aussi
@@ -91,7 +99,11 @@ new class extends Component {
         marketing digital et en proposant une excellente expérience utilisateur, les PME peuvent dynamiser leur
         croissance comme jamais auparavant. Alors n'attendez plus, exploitez le potentiel de l'e-commerce dès
         aujourd'hui et regardez vos ventes s'envoler!</p>
-        <span class="text-2xl font-bold my-4 text-red-500"> Prendre rdv</span>
+
+        
+        <x-button label="{{'Demander un devis 😃'}}" class="btn-primary mt-5" link="/contact">
+            
+        </x-button>
     </x-card>
    
 </div>

@@ -293,6 +293,9 @@ new class extends Component {
                 3.2 Netlinking</h2>
             <p>Réalisez des campagnes publicitaires Google Ads (SEA) ciblées pour atteindre votre public cible et
                 générer des leads qualifiés.</p>
+                <x-button label="{{'Demander un devis 😃'}}" class="btn-primary mt-5" link="/contact">
+            
+                </x-button>
     </div>
-
+    
 </div>

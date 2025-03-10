@@ -11,6 +11,8 @@ Une nouvelle demande de contact a été faite pour vous.
 - Site vitrine : {{ in_array('site-vitrine', $data['informationRequest']) ? 'Oui' : 'Non' }}  
 - E-commerce : {{ in_array('e-commerce', $data['informationRequest']) ? 'Oui' : 'Non' }}  
 - Marketing digital : {{ in_array('marketing-digital', $data['informationRequest']) ? 'Oui' : 'Non' }}  
+- Blog : {{ in_array('Blog', $data['informationRequest']) ? 'Oui' : 'Non' }}
+- Autres : {{ in_array('autres', $data['informationRequest']) ? 'Oui' : 'Non' }}
 
 **Message :**  
 {{ $data['subject'] }}

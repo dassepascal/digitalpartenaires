@@ -74,5 +74,9 @@ new class extends Component {
             l'entreprise et à donner une dimension globale à votre commerce local. En somme, un site vitrine devient un
             outil de croissance central, incontournable pour toutes les PME désirant prospérer dans le paysage
             commercial contemporain.</p>
+
+            <x-button label="{{'Demander un devis 😃'}}" class="btn-primary mt-5" link="/contact">
+            
+            </x-button>
     </x-card>
 </div>
