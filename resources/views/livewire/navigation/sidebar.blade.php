@@ -24,6 +24,11 @@ new class() extends Component {
                     <x-slot:actions>
                         <x-button icon="o-power" wire:click="logout" class="btn-circle btn-ghost btn-xs" tooltip-left="{{ __('Logout') }}" no-wire-navigate />
                     </x-slot:actions>
+                    <x-menu-separator />
+            @if ($user->isAdmin())
+                <x-menu-item title="{{ __('Administration') }}" icon="s-building-office-2" link="{{ route('admin') }}" />
+            @endif
+            <x-menu-separator />
                 </x-list-item>
                 <x-menu-item title="{{ __('My profile') }}" icon="o-user" link="{{ route('profile') }}" />
 				<x-menu-item title="{{ __('My addresses') }}" icon="o-map-pin" link="{{ route('addresses') }}" />
