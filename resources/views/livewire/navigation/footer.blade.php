@@ -10,14 +10,15 @@ new class() extends Component {
 
 <footer class="p-10 text-white bg-cyan-700 footer">
     <nav>
+    <a href="{{ route('contact') }}" class="link link-hover">@lang('Contact')
+    <a href="" class="link link-hover">@lang('Blog')
+      
        
-        <a href="{{ route('pages', ['page' => 'mentions-legales']) }}" class="link link-hover">@lang('Legal informations')</a>
-        <a href="" class="link link-hover">@lang('Terms and conditions of sale')</a>
     </nav>
     <nav>
         <a href="" class="link link-hover">@lang('Privacy policy')
-        <a href="" class="link link-hover">@lang('Environmental protection')</a>
-        <a href="" class="link link-hover">@lang('Administrative mandate')</a>
+        <a href="{{ route('pages', ['page' => 'mentions-legales']) }}" class="link link-hover">@lang('Legal informations')</a>
+       
     </nav>
     <nav>
       <h6 class="footer-title">@lang('Social medias')</h6>

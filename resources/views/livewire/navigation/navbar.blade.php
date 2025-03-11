@@ -29,8 +29,6 @@ new class extends Component {
         </a>
     </x-slot:brand>
 
-
-
     <!-- Actions à droite -->
     <x-slot:actions>
         <span class="hidden lg:block">
@@ -48,8 +46,6 @@ new class extends Component {
 
                     <x-menu-item title="Site vitrine" link="{{ route('services.site-vitrine') }}"
                         class=" btn-outline hover:text-white" />
-
-
 
                     <x-menu-separator />
 
@@ -75,7 +71,6 @@ new class extends Component {
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" icon="s-user" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" icon="s-map-pin" link="{{ route('addresses') }}" />
-                          
                             <x-menu-item title="{{ __('RGPD') }}" icon="s-shield-check" link="" />
                             <x-menu-item title="{{ __('Logout') }}" icon="s-arrow-right-on-rectangle" wire:click="logout" />
                         </span>
@@ -83,8 +78,8 @@ new class extends Component {
                 @else
                     <x-button label="{{ __('Login') }}" link="/login"
                         class="btn-outline flex items-center hover:bg-gray-300 " />
-
                 @endif
+            </div>
         </span>
     </x-slot:actions>
 </x-nav>
