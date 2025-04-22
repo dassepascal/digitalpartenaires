@@ -6,3 +6,209 @@
 .pop-small {
     @apply !p-1 !px-2 text-sm border-info text-center
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #1f242d;
+    overflow: hidden;
+}
+
+.sec2 {
+    background-color: rgb(96, 30, 158);
+}
+
+.sec3 {
+    background-color: #056964;
+}
+
+.sec4 {
+    background-color: #ffa600;
+}
+
+.sec5 {
+    background-color: rgb(255, 0, 85);
+}
+
+h1 {
+    font-size: 90px;
+    color: #fff;
+}
+
+p {
+    font-size: 35px;
+    color: #0ef;
+    font-weight: 600;
+}
+
+.sec2 p {
+    color: #0f0;
+}
+
+.sec3 p {
+    color: #ff0;
+}
+
+.sec4 p {
+    color: #056964;
+}
+
+.sec5 .images {
+    display: flex;
+    gap: 40px;
+}
+
+.sec5 .images img {
+    max-width: 350px;
+}
+
+/* scrolling styles */
+section .animate {
+    opacity: 0;
+    filter: blur(5px);
+    transition: 0.5s;
+}
+
+section.show-animate .animate {
+    opacity: 1;
+    filter: blur(0px);
+}
+
+.sec2 .animate {
+    transform: translateX(100%);
+}
+
+.sec2.show-animate .animate {
+    transform: translateX(0);
+}
+
+.sec3 .animate {
+    transform: scale(0.7);
+}
+
+.sec3.show-animate .animate {
+    transform: scale(1);
+}
+
+.sec4 .animate {
+    transform: rotate(30deg);
+}
+
+.sec4.show-animate .animate {
+    transform: rotate(0deg);
+}
+
+.sec5 .animate {
+    transform: translateX(100%) rotate(-90deg);
+}
+
+.sec5.show-animate .animate {
+    transform: translateX(0) rotate(0deg);
+}
+
+p.animate {
+    transition-delay: 0.2s;
+}
+
+.sec5 img:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.sec5 img:nth-child(3) {
+    transition-delay: 0.4s;
+}
+
+.sec5 .animate {
+    transform: translateX(100%) rotate(-90deg);
+}
+
+.sec5.show-animate .animate {
+    transform: translateX(0) rotate(0deg);
+}
+
+p.animate {
+    transition-delay: 0.8s;
+}
+
+.sec5 img:nth-child(2) {
+    transition-delay: 0.5s;
+}
+
+.sec5 img:nth-child(3) {
+    transition-delay: 0.4s;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Styles pour l'élément x-menu-item */
+.custom-hover {
+    padding: 40px 80px;
+    text-decoration: none;
+    color: #c01c1c;
+    font-size: 45px;
+    letter-spacing: 2px;
+    border: 5px solid #262626;
+    border-radius: 30px;
+    position: relative;
+    transition: 1s;
+}
+
+.custom-hover:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #262626;
+    transition: 1s;
+    transform: rotateX(90deg);
+    z-index: -1;
+    border-radius: 30px;
+}
+
+.custom-hover:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #262626;
+    transition: 1s;
+    transform: rotateY(90deg);
+    z-index: -1;
+    border-radius: 30px;
+}
+
+.custom-hover:hover:before {
+    transform: rotateX(0deg);
+}
+
+.custom-hover:hover:after {
+    transform: rotateY(0deg);
+}
+
+.custom-hover:hover {
+    color: white;
+    background-color: #262626;
+}
