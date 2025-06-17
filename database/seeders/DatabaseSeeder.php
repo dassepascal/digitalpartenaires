@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\{Address,Country,Page};
+use App\Models\{Address,Country,Page, Post};
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -37,6 +37,10 @@ class DatabaseSeeder extends Seeder
       $user->admin = true;
       $user->save();
 
+      $this->call([
+          PostSeeder::class
+      ]);
+
       $adminUser = new User();
       $adminUser->name = env('ADMIN_FIRSTNAME', 'Administrateur');
       $adminUser->firstname = env('ADMIN_NAME', 'PRINCIPAL');
@@ -61,8 +65,8 @@ class DatabaseSeeder extends Seeder
             'title' => $item[1],
         ]);
     }
-        
+
     }
 
-    
+
 }

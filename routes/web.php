@@ -4,11 +4,12 @@ use Livewire\Volt\Volt;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
-Volt::route('/', 'index');
+Volt::route('/', 'index')->name('index');
+Volt::route('/blog', 'blog.index')->name('blog.index');
 Volt::route('/pages/{page:slug}', 'page')->name('pages');
 Volt::route('/services/e-commerce', 'services.e-commerce')->name('services.e-commerce');
 Volt::route('/services/site-vitrine', 'services.site-vitrine')->name('services.site-vitrine');
-Volt::route('services/blog', 'services.blog')->name('services.blog');
+
 Volt::route('services/marketing-digital', 'services.marketing-digital')->name('services.marketing-digital');
 Volt::route('portfolio', 'portfolio')->name('portfolio');
 
