@@ -1,0 +1,38 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\CategoryBlog;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+class CategoryBlogSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $categories = [
+            [
+                'title' => 'Categorie 1',
+                'slug'  => 'category-1',
+            ],
+            [
+                'title' => 'Categorie 2',
+                'slug'  => 'category-2',
+            ],
+            [
+                'title' => 'Categorie 3',
+                'slug'  => 'category-3',
+            ],
+        ];
+
+        foreach ($categories as $categoryData) {
+            // Vérifie si une catégorie avec ce titre existe déjà
+            if (!CategoryBlog::where('title', $categoryData['title'])->exists()) {
+                CategoryBlog::create($categoryData);
+            }
+        }
+    }
+}
