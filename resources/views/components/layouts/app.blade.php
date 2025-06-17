@@ -21,6 +21,7 @@
 @elseif (request()->routeIs('blog.index'))
     <livewire:blog-hero />
 @endif
+{{-- <livewire:hero /> --}}
 
     {{-- NAVBAR --}}
     <livewire:navigation.navbar />
