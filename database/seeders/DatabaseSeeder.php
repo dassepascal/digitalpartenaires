@@ -40,7 +40,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             PostSeeder::class,
-               BlogPageSeeder::class,
+            BlogPageSeeder::class,
+            MenusSeeder::class,
         ]);
 
         $adminUser = new User();
