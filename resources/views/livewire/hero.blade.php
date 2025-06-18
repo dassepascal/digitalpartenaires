@@ -1,3 +1,5 @@
+
+
 <div class="min-h-[35vw] hero" style="background-image: url({{ asset('storage/hero.jpg') }});">
     <div class="bg-opacity-60 hero-overlay"></div>
     <a href="{{ '/' }}">

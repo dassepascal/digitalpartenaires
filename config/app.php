@@ -124,5 +124,14 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+ /*
+    |--------------------------------------------------------------------------
+    |Pagination
+    |--------------------------------------------------------------------------
+    |
+    | This value is the number of pagination.
+    |
+    */
+    'pagination'=>6,
 
 ];

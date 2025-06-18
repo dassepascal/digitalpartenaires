@@ -17,11 +17,11 @@
     {{-- add condition si on est sur la page d'accueil ('/') on affiche le hero sinon ('/blog.index') on affiche le blog-hero --}}
 
     @if (request()->is('/'))
-    <livewire:hero />
-@elseif (request()->routeIs('blog.index'))
-    <livewire:blog-hero />
-@endif
-{{-- <livewire:hero /> --}}
+        <livewire:hero />
+    @elseif (request()->routeIs('blog.index'))
+        <livewire:blog-hero />
+    @endif
+    {{-- <livewire:hero /> --}}
 
     {{-- NAVBAR --}}
     <livewire:navigation.navbar />
