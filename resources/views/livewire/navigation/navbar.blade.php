@@ -96,7 +96,7 @@ new class extends Component {
 
                         <span class="text-black">
                             @if ($user->isAdmin())
-                            <x-menu-item title="{{ __('Administration') }}" link="#" />
+                            <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" link="{{ route('addresses') }}" />
@@ -148,7 +148,7 @@ new class extends Component {
                         </x-slot:trigger>
                         <span class="text-black">
                             @if ($user->isAdmin())
-                            <x-menu-item title="{{ __('Administration') }}" icon="s-building-office-2" link="{{ route('admin') }}" />
+                           <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" icon="s-user" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" icon="s-map-pin" link="{{ route('addresses') }}" />

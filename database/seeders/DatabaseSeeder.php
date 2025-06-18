@@ -33,8 +33,9 @@ class DatabaseSeeder extends Seeder
                 );
             });
 
-        $user = User::find(1);
-        $user->admin = true;
+       $user = User::find(1);
+        $user->role = 'admin';
+        $user->valid = true;
         $user->save();
 
         $this->call([
@@ -45,14 +46,14 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
         ]);
 
-        $adminUser = new User();
-        $adminUser->name = env('ADMIN_FIRSTNAME', 'Administrateur');
-        $adminUser->firstname = env('ADMIN_NAME', 'PRINCIPAL');
-        $adminUser->newsletter = true;
-        $adminUser->admin = true;
-        $adminUser->email = env('ADMIN_EMAIL', 'admin@example.com');
-        $adminUser->password = Hash::make(env('ADMIN_PASSWORD', 'password'));
-        $adminUser->save();
+        // $adminUser = new User();
+        // $adminUser->name = env('ADMIN_FIRSTNAME', 'Administrateur');
+        // $adminUser->firstname = env('ADMIN_NAME', 'PRINCIPAL');
+        // $adminUser->newsletter = true;
+        // $adminUser->admin = true;
+        // $adminUser->email = env('ADMIN_EMAIL', 'admin@example.com');
+        // $adminUser->password = Hash::make(env('ADMIN_PASSWORD', 'password'));
+        // $adminUser->save();
 
         $items = [
             ['livraisons', 'Livraisons'],
