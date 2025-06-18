@@ -29,6 +29,9 @@
         "pestphp/pest": "^3.7"
     },
     "autoload": {
+        "files": [
+        "app/helpers.php"
+    ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
@@ -63,7 +66,7 @@
         "test": [
             "./vendor/bin/pest"
         ]
-        
+
     },
     "extra": {
         "laravel": {
