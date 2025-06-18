@@ -80,7 +80,7 @@ new class extends Component {
                     </div>
                     @if($post->image)
                     <x-slot:figure>
-                        <a href="{{ url('/blog/posts/' . $post->slug) }}">
+                       <a href="{{ url('/blog/posts/' . $post->slug) }}">
                             <img src="{{ asset('storage/photos/' . $post->image) }}" alt="{{ $post->title }}" />
                         </a>
                     </x-slot:figure>

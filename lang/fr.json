@@ -306,5 +306,11 @@
     "Page created successfully.": "Page crée avec succès.",
     "Are you sure you want to delete this page?": "Voulez-vous vraiment supprimer cette page ?",
     "Page deleted successfully.": "Page supprimée avec succès.",
-    "Text": "Texte"
+    "Text": "Texte",
+    "Show this category": "Voir cette catégorie",
+    "Read this post": "Lire cet article",
+    "Posts for category ": "Articles pour la catégorie ",
+    "Read": "Lire",
+    "Nothing to show !": "Rien à montrer !",
+    "No Post found with these criteria": "Aucun article trouvé avec ces critères"
 }

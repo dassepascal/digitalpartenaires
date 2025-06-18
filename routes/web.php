@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 
 Volt::route('/', 'index')->name('index');
 Volt::route('/blog', 'blog.index')->name('blog.index');
+Volt::route('/blog/posts/{slug}', 'blog.posts.show')->name('posts.show');
+Volt::route('/category/{slug}', 'blog.index');
+//Volt::route('/blog/search/{param}', 'index')->name('posts.search');
+
+
 Volt::route('/pages/{page:slug}', 'page')->name('pages');
 Volt::route('/services/e-commerce', 'services.e-commerce')->name('services.e-commerce');
 Volt::route('/services/site-vitrine', 'services.site-vitrine')->name('services.site-vitrine');

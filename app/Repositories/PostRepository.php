@@ -66,16 +66,19 @@ class PostRepository
 
     public function getPostBySlug(string $slug): Post
     {
-        $userId = auth()->id();
 
-        return Post::with('user:id,name', 'category')
-                ->withCount('validComments')
-                ->withExists([
-                    'favoritedByUsers as is_favorited' => function ($query) use ($userId) {
-                        $query->where('user_id', $userId);
-                    },
-                ])
-                ->where('slug', $slug)->firstOrFail();
+return Post::with('user:id,name', 'category')->whereSlug($slug)->firstOrFail();
+
+        // $userId = auth()->id();
+
+        // return Post::with('user:id,name', 'category')
+        //         ->withCount('validComments')
+        //         ->withExists([
+        //             'favoritedByUsers as is_favorited' => function ($query) use ($userId) {
+        //                 $query->where('user_id', $userId);
+        //             },
+        //         ])
+        //         ->where('slug', $slug)->firstOrFail();
     }
 
     public function generateUniqueSlug(string $slug): string
