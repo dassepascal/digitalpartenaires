@@ -47,17 +47,14 @@ new class extends Component {
                 <div class="flex items-center space-x-4">
                     <!-- Liens statiques -->
                     <x-menu>
-                        <x-menu-item title="{{ __('Home') }}" link="{{ route('index') }}"
+                        <x-menu-item title="{{ __('Home') }}" link="{{ route('blog.index') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
                     <x-menu>
                         <x-menu-item title="{{ __('Articles') }}" link="{{ route('blog.index') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
-                    <x-menu>
-                        <x-menu-item title="{{ __('Home') }}" link="""
-                            class=" btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
-                    </x-menu>
+                   
                     <x-menu>
                         <x-menu-item title="{{ __('Contact') }}" link="{{ route('contact') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
@@ -76,12 +73,12 @@ new class extends Component {
 
                         <span class="text-black">
                             @if ($user->isAdmin())
-                            <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
+                            <x-menu-item title="{{ __('Administration') }}" link="#" />
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" link="{{ route('addresses') }}" />
-                            <x-menu-item title="{{ __('My orders') }}" link="{{ route('orders') }}" />
-                            <x-menu-item title="{{ __('RGPD') }}" link="{{ route('rgpd') }}" />
+                            <x-menu-item title="{{ __('My orders') }}" link="#" />
+                            <x-menu-item title="{{ __('RGPD') }}" link="#" />
                             <x-menu-item title="{{ __('Logout') }}" wire:click="logout" />
                         </span>
                     </x-dropdown>
