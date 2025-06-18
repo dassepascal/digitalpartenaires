@@ -1,16 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\{Auth, Session};
-use Livewire\Volt\Component;
+use App\Models\Menu;
 use Mary\Traits\Toast;
+use Livewire\Volt\Component;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\{Auth, Session};
 
 new class extends Component {
     use Toast;
 
     public string $url;
+    public Collection $menus;
 
-    public function mount(): void
+
+    public function mount(Collection $menus): void
     {
+        $this->menus = $menus;
         $this->url = request()->url();
     }
 
@@ -26,6 +31,7 @@ new class extends Component {
         return str_contains($this->url, '/blog') || str_contains($this->url, '/category');
     }
 };
+
 ?>
 
 <div> <!-- Élément parent unique pour tout le contenu -->
@@ -54,11 +60,28 @@ new class extends Component {
                         <x-menu-item title="{{ __('Articles') }}" link="{{ route('blog.index') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
-                   
+
                     <x-menu>
                         <x-menu-item title="{{ __('Contact') }}" link="{{ route('contact') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
+                    <!-- Menus statiques -->
+                    <x-dropdown label="Categories"
+                        class=" btn-outline font-bold border  flex items-center justify-center hover:text-gray-700 hover:bg-gray-100 ">
+                        @foreach ($menus as $menu)
+                        @if ($menu->submenus->isNotEmpty())
+                        <x-menu-sub title="{{ $menu->label }}" class="btn-ghost">
+                            @foreach ($menu->submenus as $submenu)
+                            <x-menu-item title="{{ $submenu->label }}" link="{{ $submenu->link }}" />
+                            @endforeach
+
+                        </x-menu-sub>
+                        @else
+                        <x-button label="{{ $menu->label }}" link="{{ $menu->link }}" :external="Str::startsWith($menu->link, 'http')"
+                            class="btn-ghost " />
+                        @endif
+                        @endforeach
+                    </x-dropdown>
 
                     <!-- Menus dynamiques -->
 

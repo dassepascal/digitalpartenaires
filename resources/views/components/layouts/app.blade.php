@@ -24,14 +24,14 @@
     {{-- <livewire:hero /> --}}
 
     {{-- NAVBAR --}}
-    <livewire:navigation.navbar />
+    <livewire:navigation.navbar :menus="$menus" />
 
     {{-- MAIN --}}
     <x-main full-width>
 
         {{-- SIDEBAR --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit lg:hidden">
-            <livewire:navigation.sidebar />
+            <livewire:navigation.sidebar :menus="$menus" />
         </x-slot:sidebar>
 
         {{-- SLOT --}}
