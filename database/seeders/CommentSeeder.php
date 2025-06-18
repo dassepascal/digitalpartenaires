@@ -11,10 +11,9 @@ class CommentSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-
-        public function run()
-	{
-		$nbrPosts = 9;
+    public function run(): void
+    {
+        $nbrPosts = 9;
 		$nbrUsers = 3;
 
 		foreach (range(1, $nbrPosts - 1) as $i) {

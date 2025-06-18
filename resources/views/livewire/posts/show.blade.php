@@ -22,9 +22,46 @@ new class extends Component {
         \Log::debug("Post: {$slug}, Comments count: {$this->commentsCount}");
     }
 
-    public function showComments(): void
+  public function showComments(): void
     {
-        $this->showComments = true;
+        $this->listComments = true;
+
+        $this->comments = $this->post
+            ->validComments()
+            ->where('parent_id', null)
+            ->withCount([
+                'children' => function ($query) {
+                    $query->whereHas('user', function ($q) {
+                        $q->where('valid', true);
+                    });
+                },
+            ])
+            ->with([
+                'user' => function ($query) {
+                    $query->select('id', 'name', 'email', 'role')->withCount('comments');
+                },
+            ])
+            ->latest()
+            ->get();
+    }
+    public function favoritePost(): void
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            $user->favoritePosts()->attach($this->post->id);
+            $this->post->is_favorited = true;
+        }
+    }
+
+    public function unfavoritePost(): void
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            $user->favoritePosts()->detach($this->post->id);
+            $this->post->is_favorited = false;
+        }
     }
 }; ?>
 <div>
