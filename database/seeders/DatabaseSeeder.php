@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             BlogPageSeeder::class,
             MenusSeeder::class,
+            CommentSeeder::class,
         ]);
 
         $adminUser = new User();
