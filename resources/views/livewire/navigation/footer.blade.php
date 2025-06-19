@@ -11,14 +11,14 @@ new class() extends Component {
 <footer class="p-10 text-white bg-cyan-700 footer">
     <nav>
     <a href="{{ route('contact') }}" class="link link-hover">@lang('Contact')
-    <a href="" class="link link-hover">@lang('Blog')
-      
-       
+    <a href="{{ route('blog.index') }}" class="link link-hover">@lang('Blog')
+
+
     </nav>
     <nav>
-        <a href="" class="link link-hover">@lang('Privacy policy')
+        <a href="{{ route('pages', ['page' => 'politique-de-confidentialite']) }}" class="link link-hover">@lang('Privacy policy')
         <a href="{{ route('pages', ['page' => 'mentions-legales']) }}" class="link link-hover">@lang('Legal informations')</a>
-       
+
     </nav>
     <nav>
       <h6 class="footer-title">@lang('Social medias')</h6>
