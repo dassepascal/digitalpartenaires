@@ -1,5 +1,11 @@
 <?php
 
+function replaceAbsoluteUrlsWithRelative($content)
+{
+    $baseUrl = config('app.url');
+    return preg_replace('/(href|src)=["\']' . preg_quote($baseUrl, '/') . '([^"\']+)["\']/', '$1="$2"', $content);
+}
+
 
 if (!function_exists('generateRandomDateInRange')) {
     function generateRandomDateInRange($startDate, $endDate)

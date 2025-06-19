@@ -93,10 +93,9 @@ new #[Layout('components.layouts.admin')] class extends Component
             $this->reset(['title', 'slug', 'body', 'active', 'pinned', 'seo_title', 'meta_description', 'meta_keywords', 'photo','image']);
 
             // Afficher un message de succès
-            $this->success(__('Post added successfully.'));
+            $this->success(__('Post added successfully.'), redirectTo: '/admin/blog/posts/index');
 
-            // Rediriger vers la liste des posts
-            $this->success(__('Menu updated with success.'), redirectTo: '/admin/blog/posts/index');
+           
         } catch (\Exception $e) {
             // Gérer les erreurs
 

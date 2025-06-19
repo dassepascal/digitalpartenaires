@@ -341,5 +341,12 @@
     "A comment has been created on your post": "Un commentaire a été ajouté à votre article",
     "This comment is awaiting moderation.": "Ce commentaire est en attente de modération.",
     "Manage this comment": "Gérer ce commentaire",
-    "by": "par"
+    "by": "par",
+    "Post updated with success.": "Article mis à jour avec succès.",
+    "Post created successfully.": "Article créee avec succès.",
+    "Are you sure you want to delete this post?": "Voulez-vous vraiment supprimer cet article ?",
+    "Post deleted successfully.": "Article supprimée avec succès.",
+    "Comment updated with success.": "Commentaire mis à jour avec succès.",
+    "deleted": "supprimé",
+    "Post added successfully.": "Article ajouté avec succès."
 }
