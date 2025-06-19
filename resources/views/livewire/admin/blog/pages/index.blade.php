@@ -15,19 +15,23 @@ class extends Component {
 		return [['key' => 'title', 'label' => __('Title')], ['key' => 'slug', 'label' => 'Slug'], ['key' => 'active', 'label' => __('Published')]];
 	}
 
-	public function deletePage(BlogPage $page): void
-	{
-		$page->delete();
-		$this->success(__('Page deleted'));
-	}
+	public function deletePage(int $pageId): void
+{
+    $page = BlogPage::findOrFail($pageId);
+    
+    $page->delete();
+    $this->success(__('Page deleted'));
+}
 
 	public function with(): array
-	{
-		return [
-			'pages'   => BlogPage::select('id', 'title', 'slug', 'active')->get(),
-			'headers' => $this->headers(),
-		];
-	}
+{
+    $pages = BlogPage::select('id', 'title', 'slug', 'active')->get();
+    \Log::info('Pages:', $pages->toArray()); // Pour déboguer
+    return [
+        'pages'   => $pages,
+        'headers' => $this->headers(),
+    ];
+}
 }; ?>
 
 <div>
