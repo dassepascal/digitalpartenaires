@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Agence;
+use App\Models\Agency;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -14,12 +14,12 @@ class UserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Agence $agence;
+    public Agency $agence;
 
-    public function __construct(Agence $agence = null)
+    public function __construct(Agency $agence = null)
     {
         // Si aucune agence n'est passée, utilise la première ou une valeur par défaut
-        $this->agence = $agence ?? Agence::first() ?? new Agence(['name' => 'Agence par défaut', 'email' => 'no-reply@example.com']);
+        $this->agence = $agence ?? Agency::first() ?? new Agency(['name' => 'Agence par défaut', 'email' => 'no-reply@example.com']);
     }
 
     public function envelope(): Envelope

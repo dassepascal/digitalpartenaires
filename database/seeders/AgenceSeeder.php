@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Agence;
+use App\Models\Agency;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -13,6 +13,6 @@ class AgenceSeeder extends Seeder
      */
     public function run(): void
     {
-        Agence::factory()->create();
+        Agency::factory()->create();
     }
 }

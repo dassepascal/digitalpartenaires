@@ -152,7 +152,7 @@ new class extends Component {
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" icon="s-user" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" icon="s-map-pin" link="{{ route('addresses') }}" />
-                            <x-menu-item title="{{ __('RGPD') }}" icon="s-shield-check" link="" />
+                            <x-menu-item title="{{ __('RGPD') }}" icon="s-shield-check" link="{{ route('rgpd') }}" />
                             <x-menu-item title="{{ __('Logout') }}" icon="s-arrow-right-on-rectangle" wire:click="logout" />
                         </span>
                     </x-dropdown>

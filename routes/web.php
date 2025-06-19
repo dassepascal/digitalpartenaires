@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         Volt::route('/addresses', 'account.addresses.index')->name('addresses');
         Volt::route('/addresses/create', 'account.addresses.create')->name('addresses.create');
         Volt::route('/addresses/{address}/edit', 'account.addresses.edit')->name('addresses.edit');
+        Volt::route('/rgpd', 'account.rgpd.index')->name('rgpd');
     });
 
     Route::middleware(IsAdminOrRedac::class)->prefix('admin')->group(function () {
