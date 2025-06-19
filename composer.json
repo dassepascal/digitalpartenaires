@@ -10,6 +10,7 @@
         "blade-ui-kit/blade-heroicons": "^2.6",
         "creativeorange/gravatar": "~1.0",
         "hasnayeen/blade-eva-icons": "^2.0",
+        "intervention/image-laravel": "^1.5",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "league/commonmark": "^2.6",
