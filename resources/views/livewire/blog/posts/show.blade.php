@@ -75,7 +75,7 @@ new class extends Component {
         @if ($commentsCount > 0)
             <div class="flex justify-center">
                 <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
-                    wire:click="showComments" class="btn-outline" spinner />
+                    wire:click="showComments" class="btn-outline" />
             </div>
             @if ($showComments)
                 <div class="mt-4">
