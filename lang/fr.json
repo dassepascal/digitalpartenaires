@@ -348,5 +348,8 @@
     "Post deleted successfully.": "Article supprimée avec succès.",
     "Comment updated with success.": "Commentaire mis à jour avec succès.",
     "deleted": "supprimé",
-    "Post added successfully.": "Article ajouté avec succès."
+    "Post added successfully.": "Article ajouté avec succès.",
+    "Category created with success.": "Catégorie créee avec succès.",
+    "Category deleted with success.": "Catégorie supprimée avec succès.",
+    "Are you sure to delete this category?": "Voulez-vous vraiment supprimer cette catégorie ?"
 }
