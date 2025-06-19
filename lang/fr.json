@@ -357,5 +357,12 @@
     "Are you sure to delete this page?": "Êtes-vous sûr de vouloir supprimer cette page ?",
     "Page added with success.": "Page ajoutée avec succès.",
     "Page edited with success.": "Page mise à jour avec succès.",
-    "Edit a page": "Modifier une page"
+    "Edit a page": "Modifier une page",
+    "Post": "Article",
+    "Sent on": "Envoyé le",
+    "Validate the user" : "Valider l'utilisateur ",
+    "Edit or answer": "Modifier ou supprimer",
+    "Show post": "Article affiché"
+
+
 }
