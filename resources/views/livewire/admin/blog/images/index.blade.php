@@ -49,34 +49,6 @@ class extends Component {
 		}
 	}
 
-	public function getImages(): LengthAwarePaginator
-	{
-		$imagesPath = "public/photos/{$this->selectedYear}/{$this->selectedMonth}";
-//dd($imagesPath);
-
-		$allFiles   = Storage::files($imagesPath);
-
-		$this->allImages = collect($allFiles)
-        ->map(function ($file) {
-            // Retire le "public/" du chemin pour l'URL finale
-            $pathWithoutPublic = str_replace('public/', '', $file);
-            return [
-                'path' => $file,
-                'url'  => asset('storage/' . $pathWithoutPublic),
-            ];
-        })
-			->toArray();
-
-		$this->page = LengthAwarePaginator::resolveCurrentPage('page');
-		$total      = count($this->allImages);
-		$images     = array_slice($this->allImages, ($this->page - 1) * $this->perPage, $this->perPage, true);
-       //dd($this->allImages);
-
-		return new LengthAwarePaginator($images, $total, $this->perPage, $this->page, [
-			'path'     => LengthAwarePaginator::resolveCurrentPath(),
-			'pageName' => 'page',
-		]);
-	}
 
 	public function deleteImage($index): void
 	{
@@ -125,6 +97,34 @@ class extends Component {
 
         return $callback($items);
     }
+    public function getImages(): LengthAwarePaginator
+{
+    $imagesPath = "public/photos/{$this->selectedYear}/{$this->selectedMonth}";
+    \Log::info('Images path:', [$imagesPath]); // Log pour déboguer
+    $allFiles = Storage::files($imagesPath);
+    \Log::info('Files found:', $allFiles); // Log pour déboguer
+
+    $this->allImages = collect($allFiles)
+        ->map(function ($file) {
+            $pathWithoutPublic = str_replace('public/', '', $file);
+            return [
+                'path' => $file,
+                'url' => asset('storage/' . $pathWithoutPublic),
+            ];
+        })
+        ->toArray();
+
+    \Log::info('All images:', $this->allImages); // Log pour déboguer
+
+    $this->page = LengthAwarePaginator::resolveCurrentPage('page');
+    $total = count($this->allImages);
+    $images = array_slice($this->allImages, ($this->page - 1) * $this->perPage, $this->perPage, true);
+
+    return new LengthAwarePaginator($images, $total, $this->perPage, $this->page, [
+        'path' => LengthAwarePaginator::resolveCurrentPath(),
+        'pageName' => 'page',
+    ]);
+}
 
 }; ?>
 

@@ -24,13 +24,15 @@
             </x-menu-sub>
             <x-menu-item icon="s-user" title="{{ __('Accounts') }}" link="{{ route('admin.blog.users.index') }}" />
             <x-menu-item icon="c-chat-bubble-left" title="{{ __('Comments') }}"
-            link="{{ route('admin.blog.comments.index') }}" />
-        <x-menu-sub title="{{ __('Menus') }}" icon="m-list-bullet">
-            <x-menu-item title="{{ __('Navbar') }}" link="{{ route('admin.blog.menus.index') }}" />
-            <x-menu-item icon="c-photo" title="{{ __('Images') }}" link="{{ route('admin.blog.images.index') }}" />
+                link="{{ route('admin.blog.comments.index') }}" />
+            <x-menu-sub title="{{ __('Menus') }}" icon="m-list-bullet">
+                <x-menu-item title="{{ __('Navbar') }}" link="{{ route('admin.blog.menus.index') }}" />
 
-        </x-menu-sub>
-        <x-menu-item icon="m-cog-8-tooth" title="{{ __('Settings') }}" link="{{ route('admin.blog.settings') }}" :class="App::isDownForMaintenance() ? 'bg-red-300' : ''" />
+
+            </x-menu-sub>
+            <x-menu-item icon="c-photo" title="{{ __('Images') }}" link="{{ route('admin.blog.images.index') }}" />
+            <x-menu-item icon="m-cog-8-tooth" title="{{ __('Settings') }}" link="{{ route('admin.blog.settings') }}"
+                :class="App::isDownForMaintenance() ? 'bg-red-300' : ''" />
         @endif
 
         <x-menu-separator />
