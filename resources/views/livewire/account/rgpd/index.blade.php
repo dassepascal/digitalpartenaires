@@ -5,6 +5,7 @@ use Livewire\Attributes\Title;
 use Livewire\Volt\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 new #[Title('Rgpd')]
 class extends Component {
 
