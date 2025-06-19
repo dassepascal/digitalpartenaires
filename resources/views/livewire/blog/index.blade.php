@@ -80,7 +80,7 @@ new class extends Component {
                     </div>
                     @if($post->image)
                     <x-slot:figure>
-                       <a href="{{ url('/blog/posts/' . $post->slug) }}">
+                        <a href="{{ url('/blog/posts/' . $post->slug) }}">
                             <img src="{{ asset('storage/photos/' . $post->image) }}" alt="{{ $post->title }}" />
                         </a>
                     </x-slot:figure>
@@ -89,6 +89,9 @@ new class extends Component {
                     <x-slot:menu>
                         @if ($post->pinned)
                         <x-badge value="{{ __('Pinned') }}" class="p-3 badge-warning" />
+
+                        @elseif($post->created_at->gt(now()->subWeeks(config('app.newPost'))))
+                        <x-badge value="{{ __('New') }}" class="p-3 badge-success" />
                         @endif
                     </x-slot:menu>
 
