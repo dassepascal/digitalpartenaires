@@ -2,10 +2,14 @@
 
 use Livewire\Volt\Component;
 
-new class extends Component {
-    //
-}; ?>
 
+new class extends Component {
+    // public function mount()
+    // {
+    //     $this->dispatchBrowserEvent('init-scroll-animation');
+    // }
+};
+?>
 
 <div>
     <section class="sec1 min-h-screen flex flex-col justify-center items-center bg-[#1f242d] overflow-hidden show-animate">
@@ -36,42 +40,7 @@ new class extends Component {
         </div>
     </section>
 
-    <script>
-        let observer = null;
 
-        function handleScrollAnimations() {
-            if (observer) {
-                observer.disconnect();
-            }
-
-            const sections = document.querySelectorAll('section');
-            observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    entry.target.classList.toggle('show-animate', entry.isIntersecting);
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '50px'
-            });
-
-            sections.forEach(section => observer.observe(section));
-        }
-
-        document.addEventListener('DOMContentLoaded', handleScrollAnimations);
-        document.addEventListener('livewire:navigated', () => {
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('show-animate');
-            });
-            handleScrollAnimations();
-        });
-
-        window.addEventListener('beforeunload', () => {
-            if (observer) {
-                observer.disconnect();
-                observer = null;
-            }
-        });
-    </script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
