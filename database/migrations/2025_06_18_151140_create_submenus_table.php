@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user');
+        Schema::create('submenus', function (Blueprint $table) {
+            $table->id();
+            $table->string('label');
+            $table->integer('order');
+            $table->string('link')->default('#');
+            $table->foreignId('menu_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
+        Schema::dropIfExists('submenus');
     }
 };

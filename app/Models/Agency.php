@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @mixin IdeHelperAgence
  */
-class Agence extends Model
+class Agency extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 
-        'address', 
-        'email', 
-        'holder', 
-        'bic', 
-        'iban', 
-        'bank', 
+        'name',
+        'address',
+        'email',
+        'holder',
+        'bic',
+        'iban',
+        'bank',
         'bank_address',
         'phone',
         'facebook',

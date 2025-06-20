@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Agence;
+use App\Models\Agency;
 
 test('an agence can be instantiated', function () {
-    $agence = new Agence([
+    $agence = new Agency([
         'name' => 'Agence Paris',
         'address' => '123 Rue de Paris',
         'email' => 'paris@agence.com',
@@ -24,7 +24,7 @@ test('an agence can be instantiated', function () {
         'mandat' => false,
     ]);
 
-    expect($agence)->toBeInstanceOf(Agence::class)
+    expect($agence)->toBeInstanceOf(Agency::class)
         ->and($agence->name)->toBe('Agence Paris')
         ->and($agence->email)->toBe('paris@agence.com')
         ->and($agence->holder)->toBe('Jean Dupont');
@@ -54,7 +54,7 @@ test('an agence has fillable attributes', function () {
         'mandat' => true,
     ];
 
-    $agence = new Agence($attributes);
+    $agence = new Agency($attributes);
 
     foreach ($attributes as $key => $value) {
         expect($agence->$key)->toBe($value);

@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'title'=> env('APP_TITLE', 'Titre'),
+    'subTitle'=> env('APP_SUBTITLE', 'Soustitre'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +124,14 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+ /*
+    |--------------------------------------------------------------------------
+    |Pagination
+    |--------------------------------------------------------------------------
+    |
+    | This value is the number of pagination.
+    |
+    */
+    'pagination'=>6,
 
 ];

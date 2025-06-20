@@ -3,17 +3,16 @@
 use Illuminate\Support\Facades\{Auth, Session};
 use Livewire\Volt\Component;
 
-new class() extends Component
-{
-	public function logout(): void
-	{
-		Auth::guard('web')->logout();
+new class extends Component {
+    public function logout(): void
+    {
+        Auth::guard('web')->logout();
 
-		Session::invalidate();
-		Session::regenerateToken();
+        Session::invalidate();
+        Session::regenerateToken();
 
-		$this->redirect('/');
-	}
+        $this->redirect('/');
+    }
 }; ?>
 
 <div>
@@ -26,14 +25,18 @@ new class() extends Component
             </x-slot:actions>
         </x-list-item>
         <x-menu-separator />
-        <x-menu-item title="{{ __('Dashboard') }}" icon="s-building-office-2" link="{{ route('admin') }}" />
-        <x-menu-sub title="{{__('Settings')}}" icon="s-cog-8-tooth">
-            
-        <x-menu-item title="{{ __('Pages') }}" icon="o-document-duplicate" link="{{ route('admin.parameters.pages.index') }}" />
-        </x-menu-sub>
-        <x-menu-item icon="m-arrow-right-end-on-rectangle" title="{{ __('Go on agence') }}" link="/" />
-        <x-menu-item>
-            <x-theme-toggle />
-        </x-menu-item>
+
+        <div class="flex">
+            <aside class="w-64 bg-gray-100">
+                @if (request()->is('admin/agency*'))
+                    @include('livewire.admin.agency.sidebar')
+                @elseif (request()->is('admin/blog*'))
+                    @include('livewire.admin.blog.sidebar')
+                @endif
+            </aside>
+           
+        </div>
     </x-menu>
+
+
 </div>

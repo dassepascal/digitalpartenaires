@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Agence;
+use App\Models\Agency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class AgenceFactory extends Factory
 {
 
-    protected $model = Agence::class;
+    protected $model = Agency::class;
     /**
      * Define the model's default state.
      *

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\{Address,Country,Page};
+use App\Models\{Address, Country, Page, Post};
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -25,44 +25,51 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()
-        ->count(20)
-        ->create()
-        ->each(function ($user) {
-            $user->addresses()->createMany(
-                Address::factory()->count(mt_rand(2, 3))->make()->toArray()
-            );
-        });
+            ->count(20)
+            ->create()
+            ->each(function ($user) {
+                $user->addresses()->createMany(
+                    Address::factory()->count(mt_rand(2, 3))->make()->toArray()
+                );
+            });
 
-      $user = User::find(1);
-      $user->admin = true;
-      $user->save();
+       $user = User::find(1);
+        $user->role = 'admin';
+        $user->valid = true;
+        $user->save();
 
-      $adminUser = new User();
-      $adminUser->name = env('ADMIN_FIRSTNAME', 'Administrateur');
-      $adminUser->firstname = env('ADMIN_NAME', 'PRINCIPAL');
-      $adminUser->newsletter = true;
-      $adminUser->admin = true;
-      $adminUser->email = env('ADMIN_EMAIL', 'admin@example.com');
-      $adminUser->password = Hash::make(env('ADMIN_PASSWORD', 'password'));
-      $adminUser->save();
-
-      $items = [
-        ['livraisons', 'Livraisons'],
-        ['mentions-legales', 'Mentions légales'],
-        ['conditions-generales-de-vente', 'Conditons générales de vente'],
-        ['politique-de-confidentialite', 'Politique de confidentialité'],
-        ['respect-environnement', 'Respect de l\'environnement'],
-        ['mandat-administratif', 'Mandat administratif'],
-    ];
-
-      foreach ($items as $item) {
-        Page::factory()->create([
-            'slug' => $item[0],
-            'title' => $item[1],
+        $this->call([
+            CategorySeeder::class,
+            PostSeeder::class,
+            BlogPageSeeder::class,
+            MenusSeeder::class,
+            CommentSeeder::class,
+            SettingSeeder::class
         ]);
-    }
-        
-    }
 
-    
+        // $adminUser = new User();
+        // $adminUser->name = env('ADMIN_FIRSTNAME', 'Administrateur');
+        // $adminUser->firstname = env('ADMIN_NAME', 'PRINCIPAL');
+        // $adminUser->newsletter = true;
+        // $adminUser->admin = true;
+        // $adminUser->email = env('ADMIN_EMAIL', 'admin@example.com');
+        // $adminUser->password = Hash::make(env('ADMIN_PASSWORD', 'password'));
+        // $adminUser->save();
+
+        $items = [
+            ['livraisons', 'Livraisons'],
+            ['mentions-legales', 'Mentions légales'],
+            ['conditions-generales-de-vente', 'Conditons générales de vente'],
+            ['politique-de-confidentialite', 'Politique de confidentialité'],
+            ['respect-environnement', 'Respect de l\'environnement'],
+            ['mandat-administratif', 'Mandat administratif'],
+        ];
+
+        foreach ($items as $item) {
+            Page::factory()->create([
+                'slug' => $item[0],
+                'title' => $item[1],
+            ]);
+        }
+    }
 }
