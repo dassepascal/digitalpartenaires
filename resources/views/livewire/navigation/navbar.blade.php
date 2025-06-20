@@ -92,7 +92,8 @@ new class extends Component {
 
                     <!-- Menus dynamiques -->
 
-
+                    <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
+                    <livewire:blog.search />
 
                     @if ($user = auth()->user())
                     <x-dropdown>
@@ -112,12 +113,12 @@ new class extends Component {
                             <x-menu-item title="{{ __('Logout') }}" wire:click="logout" />
                         </span>
                     </x-dropdown>
+
                     @else
                     <x-button label="{{ __('Login') }}" link="/login"
                         class="btn-ghost h-10 flex items-center justify-center" />
 
                     @endif
-                    <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
 
                 </div>
                 @else

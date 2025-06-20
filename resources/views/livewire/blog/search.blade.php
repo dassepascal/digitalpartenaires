@@ -3,15 +3,21 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    #[Validate('required|string|max:100')]
-	public string $search = '';
+    public string $search = '';
 
-	public function save()
-	{
-		$data = $this->validate();
+    public function rules(): array
+    {
+        return [
+            'search' => 'required|string|max:100',
+        ];
+    }
 
-		return redirect('/search/' . $data['search']);
-	}
+    public function save()
+    {
+        $data = $this->validate();
+
+        return redirect('/blog/search/' . $data['search']);
+    }
 }; ?>
 
 <div>

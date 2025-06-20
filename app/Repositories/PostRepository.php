@@ -48,18 +48,18 @@ class PostRepository
                     ELSE {$adaptedReq}
                 END AS excerpt"
             )
-    ->with('user:id,name', 'category')
-    ->whereActive(true)
-    ->when(auth()->check(), function ($query) {
-        $userId = auth()->id();
-        $query->addSelect([
-            'is_favorited' => DB::table('favorites')
-                ->selectRaw('1')
-                ->whereColumn('post_id', 'posts.id')
-                ->where('user_id', $userId)
-                ->limit(1)
-        ]);
-    });
+            ->with('user:id,name', 'category')
+            ->whereActive(true)
+            ->when(auth()->check(), function ($query) {
+                $userId = auth()->id();
+                $query->addSelect([
+                    'is_favorited' => DB::table('favorites')
+                        ->selectRaw('1')
+                        ->whereColumn('post_id', 'posts.id')
+                        ->where('user_id', $userId)
+                        ->limit(1)
+                ]);
+            });
     }
 
 
@@ -77,18 +77,18 @@ class PostRepository
 
 
     public function getPostBySlug(string $slug): Post
-{
-	$userId = auth()->id();
+    {
+        $userId = auth()->id();
 
-	return Post::with('user:id,name', 'category')
-			->withCount('validComments')
-			->withExists([
-				'favoritedByUsers as is_favorited' => function ($query) use ($userId) {
-					$query->where('user_id', $userId);
-				},
-			])
-			->where('slug', $slug)->firstOrFail();
-}
+        return Post::with('user:id,name', 'category')
+            ->withCount('validComments')
+            ->withExists([
+                'favoritedByUsers as is_favorited' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                },
+            ])
+            ->where('slug', $slug)->firstOrFail();
+    }
 
     public function generateUniqueSlug(string $slug): string
     {
@@ -114,13 +114,14 @@ class PostRepository
     }
 
     public function getFavoritePosts(User $user): LengthAwarePaginator
-{
-	return $this->getBaseQuery()
-		->whereHas('favoritedByUsers', function (Builder $query) {
-			$query->where('user_id', auth()->id());
-		})
-		->latest()
-		->paginate(config('app.pagination'));
-}
+    {
+        return $this->getBaseQuery()
+            ->whereHas('favoritedByUsers', function (Builder $query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->latest()
+            ->paginate(config('app.pagination'));
+    }
 
+    
 }
