@@ -18,12 +18,11 @@ new class extends Component {
     public string $param       = '';
     public function mount(string $slug = '', string $param = ''): void
     {
-
         $this->param = $param;
 
-        if (request()->is('category/*')) {
+        if (request()->is('blog/category/*')) {
             $this->category = $this->getCategoryBySlug($slug);
-        } elseif (request()->is('favorites')) {
+        } elseif (request()->is('blog/favorites')) {
             $this->favorites = true;
         }
     }
@@ -45,7 +44,7 @@ new class extends Component {
 
     protected function getCategoryBySlug(string $slug): ?Category
     {
-        return 'category' === request()->segment(1) ? Category::whereSlug($slug)->firstOrFail() : null;
+        return request()->segment(2) === 'category' ? Category::whereSlug($slug)->firstOrFail() : null;
     }
 
 

@@ -8,7 +8,7 @@ use App\Http\Middleware\IsAdminOrRedac;
 Volt::route('/', 'index')->name('index');
 Volt::route('/blog', 'blog.index')->name('blog.index');
 Volt::route('/blog/posts/{slug}', 'posts.show')->name('posts.show');
-Volt::route('/category/{slug}', 'blog.index');
+Volt::route('/blog/category/{slug}', 'blog.index');
 Volt::route('/blog/search/{param}', 'index')->name('posts.search');
 Volt::route('/blog/pages/{page:slug}', 'pages.show')->name('pages.show');
 
@@ -33,7 +33,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-Volt::route('/favorites', 'blog.index')->name('posts.favorites');
+Volt::route('/blog/favorites', 'blog.index')->name('posts.favorites');
     Route::prefix('account')->group(function () {
         Volt::route('/profile', 'account.profile')->name('profile');
         Volt::route('/addresses', 'account.addresses.index')->name('addresses');

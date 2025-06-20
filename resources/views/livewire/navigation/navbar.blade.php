@@ -28,7 +28,7 @@ new class extends Component {
     }
     public function isBlogPage(): bool
     {
-        return str_contains($this->url, '/blog') || str_contains($this->url, '/category');
+        return str_contains($this->url, '/blog') || str_contains($this->url, '/blog/category');
     }
 };
 
