@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class PostRepository
 {
@@ -44,10 +45,20 @@ class PostRepository
                 "CASE
                     WHEN LENGTH(body) <= 300 THEN body
                     ELSE {$adaptedReq}
-                END AS excerpt",
+                END AS excerpt"
             )
-            ->with('user:id,name', 'category')
-            ->whereActive(true);
+    ->with('user:id,name', 'category')
+    ->whereActive(true)
+    ->when(auth()->check(), function ($query) {
+        $userId = auth()->id();
+        $query->addSelect([
+            'is_favorited' => DB::table('favorites')
+                ->selectRaw('1')
+                ->whereColumn('post_id', 'posts.id')
+                ->where('user_id', $userId)
+                ->limit(1)
+        ]);
+    });
     }
 
 
@@ -67,9 +78,9 @@ class PostRepository
     public function getPostBySlug(string $slug): Post
     {
 
-return Post::with('user:id,name', 'category')
-			->withCount('validComments')
-			->whereSlug($slug)->firstOrFail();
+        return Post::with('user:id,name', 'category')
+            ->withCount('validComments')
+            ->whereSlug($slug)->firstOrFail();
 
         // $userId = auth()->id();
 
@@ -84,26 +95,25 @@ return Post::with('user:id,name', 'category')
     }
 
     public function generateUniqueSlug(string $slug): string
-{
-	$newSlug = $slug;
-	$counter = 1;
-	while (Post::where('slug', $newSlug)->exists()) {
-		$newSlug = $slug . '-' . $counter;
-		++$counter;
-	}
-	return $newSlug;
-}
+    {
+        $newSlug = $slug;
+        $counter = 1;
+        while (Post::where('slug', $newSlug)->exists()) {
+            $newSlug = $slug . '-' . $counter;
+            ++$counter;
+        }
+        return $newSlug;
+    }
 
-public function clonePost(int $postId): void
-{
-    $originalPost       = Post::findOrFail($postId);
-    $clonedPost         = $originalPost->replicate();
-    $postRepository     = new PostRepository();
-    $clonedPost->slug   = $postRepository->generateUniqueSlug($originalPost->slug);
-    $clonedPost->active = false;
-    $clonedPost->save();
+    public function clonePost(int $postId): void
+    {
+        $originalPost       = Post::findOrFail($postId);
+        $clonedPost         = $originalPost->replicate();
+        $postRepository     = new PostRepository();
+        $clonedPost->slug   = $postRepository->generateUniqueSlug($originalPost->slug);
+        $clonedPost->active = false;
+        $clonedPost->save();
 
-    // Ici on redirigera vers le formulaire de modification de l'article cloné
-}
-
+        // Ici on redirigera vers le formulaire de modification de l'article cloné
+    }
 }
