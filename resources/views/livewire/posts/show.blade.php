@@ -7,7 +7,7 @@ use App\Repositories\PostRepository;
 
 new class extends Component {
     public Post $post;
-    public int $commentsCount; // Ajout de la propriété publique
+    public int $commentsCount;
     public Collection $comments;
     public bool $listComments = false;
 
@@ -60,114 +60,117 @@ new class extends Component {
         }
     }
 }; ?>
-
 <div>
-    <livewire:blog-hero />
+
+ 
 
 
     @section('title', $post->seo_title ?? $post->title)
     @section('description', $post->meta_description)
     @section('keywords', $post->meta_keywords)
-    <div id="top" class="flex justify-end gap-4">
-        @auth
+
+    <div class="relative grid items-center w-full py-5 mx-auto md:px-12 max-w-7xl mt-5">
+        <div id="top" class="flex justify-end gap-4 ">
+            @auth
+                <x-popover>
+                    <x-slot:trigger>
+                        @if ($post->is_favorited)
+                            <x-button icon="s-star" wire:click="unfavoritePost" spinner
+                                class="text-yellow-500 btn-ghost btn-sm" />
+                        @else
+                            <x-button icon="s-star" wire:click="favoritePost" spinner class="btn-ghost btn-sm" />
+                        @endif
+                    </x-slot:trigger>
+                    <x-slot:content class="pop-small">
+                        @if ($post->is_favorited)
+                            @lang('Remove from favorites')
+                        @else
+                            @lang('Bookmark this post')
+                        @endif
+                    </x-slot:content>
+                </x-popover>
+                @if (Auth::user()->isAdmin() || Auth::user()->id == $post->user_id)
+                    <x-popover>
+                        <x-slot:trigger>
+                            <x-button icon="c-pencil-square" link="{{ route('admin.blog.posts.edit', $post) }}" spinner
+                                class="btn-ghost btn-sm" />
+                        </x-slot:trigger>
+                        <x-slot:content class="pop-small">
+                            @lang('Edit this post')
+                        </x-slot:content>
+                    </x-popover>
+                    <x-popover>
+                        <x-slot:trigger>
+                            <x-button icon="o-finger-print" wire:click="clonePost({{ $post->id }})" spinner
+                                class="btn-ghost btn-sm" />
+                        </x-slot:trigger>
+                        <x-slot:content class="pop-small">
+                            @lang('Clone this post')
+                        </x-slot:content>
+                    </x-popover>
+                @endif
+            @endauth
             <x-popover>
                 <x-slot:trigger>
-                    @if ($post->is_favorited)
-                        <x-button icon="s-star" wire:click="unfavoritePost" spinner
-                            class="text-yellow-500 btn-ghost btn-sm" />
-                    @else
-                        <x-button icon="s-star" wire:click="favoritePost" spinner class="btn-ghost btn-sm" />
-                    @endif
+                    <x-button class="btn-sm "><a
+                            href="{{ url('/category/' . $post->category->slug) }}">{{ $post->category->title }}</a></x-button>
                 </x-slot:trigger>
                 <x-slot:content class="pop-small">
-                    @if ($post->is_favorited)
-                        @lang('Remove from favorites')
-                    @else
-                        @lang('Bookmark this post')
-                    @endif
+                    @lang('Show this category')
                 </x-slot:content>
             </x-popover>
-            @if (Auth::user()->isAdmin() || Auth::user()->id == $post->user_id)
-                <x-popover>
-                    <x-slot:trigger>
-                        <x-button icon="c-pencil-square" link="{{ route('admin.blog.posts.edit', $post) }}" spinner
-                            class="btn-ghost btn-sm" />
-                    </x-slot:trigger>
-                    <x-slot:content class="pop-small">
-                        @lang('Edit this post')
-                    </x-slot:content>
-                </x-popover>
-                <x-popover>
-                    <x-slot:trigger>
-                        <x-button icon="o-finger-print" wire:click="clonePost({{ $post->id }})" spinner
-                            class="btn-ghost btn-sm" />
-                    </x-slot:trigger>
-                    <x-slot:content class="pop-small">
-                        @lang('Clone this post')
-                    </x-slot:content>
-                </x-popover>
+        </div>
+        <x-header title="{!! $post->title !!}" subtitle="{{ ucfirst($post->created_at->isoFormat('LLLL')) }} "
+            size="text-2xl sm:text-3xl md:text-4xl" />
+        <div class="relative items-center w-full py-5 mx-auto prose md:px-12 max-w-7xl">
+            @if ($post->image)
+                <div class="flex flex-col items-center mb-4">
+                    <img src="{{ asset('storage/photos/' . $post->image) }}" />
+                </div>
+                <br>
             @endif
-        @endauth
-        <x-popover>
-            <x-slot:trigger>
-                <x-button class="btn-sm "><a
-                        href="{{ url('/category/' . $post->category->slug) }}">{{ $post->category->title }}</a></x-button>
-            </x-slot:trigger>
-            <x-slot:content class="pop-small">
-                @lang('Show this category')
-            </x-slot:content>
-        </x-popover>
-    </div>
-    <x-header title="{!! $post->title !!}" subtitle="{{ ucfirst($post->created_at->isoFormat('LLLL')) }} "
-        size="text-2xl sm:text-3xl md:text-4xl" />
-    <div class="relative items-center w-full py-5 mx-auto prose md:px-12 max-w-7xl">
-        @if ($post->image)
-            <div class="flex flex-col items-center mb-4">
-                <img src="{{ asset('storage/photos/' . $post->image) }}" />
+            <div class="text-justify">
+                {!! $post->body !!}
             </div>
-            <br>
-        @endif
-        <div class="text-justify">
-            {!! $post->body !!}
+        </div>
+        <br>
+        <hr>
+        <div class="flex justify-between">
+            <p>@lang('By ') {{ $post->user->name }}</p>
+            <em>
+                @if ($commentsCount > 0)
+                    @lang('Number of comments: ') {{ $commentsCount }}
+                @else
+                    @lang('No comments')
+                @endif
+            </em>
+        </div>
+
+        <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
+            @if ($listComments)
+                <x-card title="{{ __('Comments') }}" shadow separator>
+                    @foreach ($comments as $comment)
+                        @if (!$comment->parent_id)
+                            <livewire:posts.comment :$comment :depth="0" :key="$comment->id" />
+                        @endif
+                    @endforeach
+                    @auth
+                        <livewire:posts.commentBase :postId="$post->id" />
+                    @endauth
+                </x-card>
+            @else
+                @if ($commentsCount > 0)
+                    <div class="flex justify-center">
+                        <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
+                            wire:click="showComments" class="btn-outline" />
+                    </div>
+                @else
+                    @auth
+                        <livewire:posts.commentBase :postId="$post->id" />
+                    @endauth
+                @endif
+            @endif
         </div>
     </div>
-    <br>
-    <hr>
-    <div class="flex justify-between">
-        <p>@lang('By ') {{ $post->user->name }}</p>
-        <em>
-            @if ($commentsCount > 0)
-                @lang('Number of comments: ') {{ $commentsCount }}
-            @else
-                @lang('No comments')
-            @endif
-        </em>
-    </div>
-
-
-    <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
-        @if ($listComments)
-            <x-card title="{{ __('Comments') }}" shadow separator>
-                @foreach ($comments as $comment)
-                    @if (!$comment->parent_id)
-                        <livewire:posts.comment :$comment :depth="0" :key="$comment->id" />
-                    @endif
-                @endforeach
-                @auth
-                    <livewire:posts.commentBase :postId="$post->id" />
-                @endauth
-            </x-card>
-        @else
-            @if ($commentsCount > 0)
-                <div class="flex justify-center">
-                    <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
-                        wire:click="showComments" class="btn-outline" />
-                </div>
-            @else
-                @auth
-                    <livewire:posts.commentBase :postId="$post->id" />
-                @endauth
-            @endif
-        @endif
-    </div>
+</div>
 </div>

@@ -51,7 +51,7 @@ new class extends Component {
 
 
 
-    <div class="relative grid items-center w-full py-5 mx-auto  md:px-12 max-w-7xl mt-5">
+    <div class="relative grid items-center w-full py-5 mx-auto  md:px-12 max-w-7xl mt-5 ">
         @if ($category)
         <x-header title="{{ __('Posts for category ') }} {{ $category->title }}" size="text-2xl sm:text-3xl md:text-4xl" />
         @elseif($param !== '')
@@ -64,7 +64,7 @@ new class extends Component {
             {{ $posts->links() }}
         </div>
 
-        <div class="container mx-auto">
+        <div class="container mx-auto ">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse($posts as $post)
                 <x-card
@@ -131,7 +131,7 @@ new class extends Component {
 
 
         <!-- Pagination inférieure -->
-        <div class="mb-4 mary-table-pagination">
+        <div class="mb-4 mary-table-pagination ">
             <div class="mb-5 border border-t-0 border-x-0 border-b-1 border-b-base-300"></div>
             {{ $posts->links() }}
         </div>
