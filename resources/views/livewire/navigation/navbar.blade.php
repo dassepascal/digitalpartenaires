@@ -28,7 +28,7 @@ new class extends Component {
     }
     public function isBlogPage(): bool
     {
-        return str_contains($this->url, '/blog') || str_contains($this->url, '/blog/category');
+        return str_contains($this->url, '/blog') || str_contains($this->url, '/blog/category/*}');
     }
 };
 
@@ -66,18 +66,21 @@ new class extends Component {
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
                     <!-- Menus statiques -->
-                    <x-dropdown label="Categories"
-                        class=" btn-outline font-bold border  flex items-center justify-center hover:text-gray-700 hover:bg-gray-100 ">
+                    <x-dropdown label="Categories" class=" btn-outline font-bold border  flex items-center justify-center hover:text-gray-700 hover:bg-gray-100 ">
                         @foreach ($menus as $menu)
                         @if ($menu->submenus->isNotEmpty())
                         <x-menu-sub title="{{ $menu->label }}" class="btn-ghost">
                             @foreach ($menu->submenus as $submenu)
-                            <x-menu-item title="{{ $submenu->label }}" link="{{ $submenu->link }}" />
+                            <x-menu-item
+                                title="{{ $submenu->label }}"
+                                link="{{ str_contains($submenu->link, '/category/') ? '/blog' . $submenu->link : $submenu->link }}" />
                             @endforeach
-
                         </x-menu-sub>
                         @else
-                        <x-button label="{{ $menu->label }}" link="{{ $menu->link }}" :external="Str::startsWith($menu->link, 'http')"
+                        <x-button
+                            label="{{ $menu->label }}"
+                            link="{{ str_contains($menu->link, '/category/') ? '/blog' . $menu->link : $menu->link }}"
+                            :external="Str::startsWith($menu->link, 'http')"
                             class="btn-ghost " />
                         @endif
                         @endforeach

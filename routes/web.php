@@ -8,7 +8,7 @@ use App\Http\Middleware\IsAdminOrRedac;
 Volt::route('/', 'index')->name('index');
 Volt::route('/blog', 'blog.index')->name('blog.index');
 Volt::route('/blog/posts/{slug}', 'posts.show')->name('posts.show');
-Volt::route('/blog/category/{slug}', 'blog.index');
+Volt::route('/blog/category/{slug}', 'blog.index')->name('blog.category');
 Volt::route('/blog/search/{param}', 'blog.index')->name('posts.search');
 Volt::route('/blog/pages/{page:slug}', 'pages.show')->name('pages.show');
 
