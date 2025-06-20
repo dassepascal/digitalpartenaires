@@ -1,10 +1,11 @@
 <?php
 
-use App\Models\{ Comment, Reaction };
-use App\Notifications\{CommentAnswerCreated, CommentCreated};
-use Illuminate\Support\Collection;
-use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Collection;
+use App\Models\{ Comment, Reaction };
+use Mews\Purifier\Casts\CleanHtmlInput;
+use App\Notifications\{CommentAnswerCreated, CommentCreated};
 
 new class() extends Component {
 	public ?Comment $comment;
@@ -17,6 +18,10 @@ new class() extends Component {
 
 	#[Validate('required|max:10000')]
 	public string $message = '';
+
+    protected $casts = [
+		'body' => CleanHtmlInput::class,
+	];
 
 	public function mount($comment, $depth): void
 	{

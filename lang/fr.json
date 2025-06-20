@@ -427,5 +427,21 @@
     "Settings updated successfully!": "Paramètres bien enregistrés!",
     "Number of weeks a post is marked new": "Nombre de semaines un article est marqué comme nouveau",
     "Between 1 and 8.": "Entre 1 et 8",
-    "Go to bypass page": "Aller sur la page de bypass"
+    "Go to bypass page": "Aller sur la page de bypass",
+    "This is your first comment": "C'est votre premier commentaire",
+    "It will be validate by an administrator before it appears here": "Il sera valide par un administrateur avant qu'il ne soit affiché ici",
+    "Leave a comment": "Laissez un commentaire",
+    "Post comment": "Poster un commentaire",
+
+    "Update your comment": "Modifier votre commentaire",
+    "Are you sure to delete this comment?": "Etes-vous sûr de vouloir supprimer ce commentaire ?",
+
+    "Modify": "Modifier",
+    "1 comment": "1 commentaire",
+    "comments": "commentaires",
+    "Your comment...": "Votre commentaire",
+    "An answer has been created on your comment": "Une réponse a été apportée à votre commentaire",
+    "Show this comment": "Voir ce commentaire",
+    "Answer": "Répondre",
+"Show the answers": "Afficher les réponses"
 }
