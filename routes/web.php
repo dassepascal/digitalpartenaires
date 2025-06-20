@@ -33,12 +33,14 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
+Volt::route('/favorites', 'blog.index')->name('posts.favorites');
     Route::prefix('account')->group(function () {
         Volt::route('/profile', 'account.profile')->name('profile');
         Volt::route('/addresses', 'account.addresses.index')->name('addresses');
         Volt::route('/addresses/create', 'account.addresses.create')->name('addresses.create');
         Volt::route('/addresses/{address}/edit', 'account.addresses.edit')->name('addresses.edit');
         Volt::route('/rgpd', 'account.rgpd.index')->name('rgpd');
+
     });
 
     Route::middleware(IsAdminOrRedac::class)->prefix('admin')->group(function () {
@@ -70,6 +72,7 @@ Route::middleware('auth')->group(function () {
             Volt::route('/categories', 'admin.blog.categories.index')->name('admin.blog.categories.index');
             Volt::route('/categories/create', 'admin.blog.categories.create')->name('admin.blog.categories.create');
             Volt::route('/categories/{category}/edit', 'admin.blog.categories.edit')->name('admin.blog.categories.edit');
+
             Volt::route('/pages/index', 'admin.blog.pages.index')->name('admin.blog.pages.index');
             Volt::route('/pages/create', 'admin.blog.pages.create')->name('admin.blog.pages.create');
             Volt::route('/pages/{page:slug}/edit', 'admin.blog.pages.edit')->name('admin.blog.pages.edit');
@@ -84,6 +87,7 @@ Route::middleware('auth')->group(function () {
             Volt::route('/images/index', 'admin.blog.images.index')->name('admin.blog.images.index');
             Volt::route('/images/{year}/{month}/{id}/edit', 'admin.blog.images.edit')->name('admin.blog.images.edit');
             Volt::route('/settings', 'admin.blog.settings')->name('admin.blog.settings');
+
 
         });
     });

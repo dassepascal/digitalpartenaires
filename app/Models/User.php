@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @mixin IdeHelperUser
@@ -76,6 +77,10 @@ class User extends Authenticatable
     public function comments(): HasMany
 {
     return $this->hasMany(Comment::class);
+}
+public function favoritePosts(): BelongsToMany
+{
+    return $this->belongsToMany(Post::class, 'favorites');
 }
 
 }

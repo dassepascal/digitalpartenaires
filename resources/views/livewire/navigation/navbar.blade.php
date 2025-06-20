@@ -46,9 +46,9 @@ new class extends Component {
             </a>
         </x-slot:brand>
 
-
         <x-slot:actions>
             <span class="hidden lg:block">
+                @php $user = auth()->user(); @endphp
                 @if ($this->isBlogPage())
                 <div class="flex items-center space-x-4">
                     <!-- Liens statiques -->
@@ -82,6 +82,13 @@ new class extends Component {
                         @endif
                         @endforeach
                     </x-dropdown>
+
+                    @auth
+                    @if ($user->favoritePosts()->exists())
+                    <a title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                            class="w-7 h-7" /></a>
+                    @endif
+                    @endauth
 
                     <!-- Menus dynamiques -->
 
@@ -148,7 +155,7 @@ new class extends Component {
                         </x-slot:trigger>
                         <span class="text-black">
                             @if ($user->isAdmin())
-                           <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
+                            <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
                             @endif
                             <x-menu-item title="{{ __('My profile') }}" icon="s-user" link="{{ route('profile') }}" />
                             <x-menu-item title="{{ __('My addresses') }}" icon="s-map-pin" link="{{ route('addresses') }}" />

@@ -7,6 +7,7 @@ namespace App\Repositories;
 use Exception;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -111,5 +112,15 @@ class PostRepository
 
         // Ici on redirigera vers le formulaire de modification de l'article cloné
     }
+
+    public function getFavoritePosts(User $user): LengthAwarePaginator
+{
+	return $this->getBaseQuery()
+		->whereHas('favoritedByUsers', function (Builder $query) {
+			$query->where('user_id', auth()->id());
+		})
+		->latest()
+		->paginate(config('app.pagination'));
+}
 
 }
