@@ -18,6 +18,27 @@ section.show-animate .animate {
     opacity: 1;
 }
 
+/* Animation spécifique pour les h1 */
+section .animate-h1 {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    filter: blur(6px);
+    transition:
+        opacity 0.8s cubic-bezier(.77,0,.18,1) 0s,
+        transform 0.8s cubic-bezier(.77,0,.18,1) 0s,
+        filter 0.8s cubic-bezier(.77,0,.18,1) 0s,
+        box-shadow 0.8s cubic-bezier(.77,0,.18,1) 0s;
+    box-shadow: none;
+}
+
+section.show-animate .animate-h1 {
+    opacity: 1;
+    transform: translateY(0) scale(1.05);
+    filter: blur(0);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+    transition-delay: 0.1s;
+}
+
 /* Section 2: Slide in from right */
 .sec2 .animate {
     transform: translateX(100%);
@@ -59,6 +80,11 @@ p.animate {
 }
 .sec5 img:nth-child(3) {
     transition-delay: 0.4s;
+}
+
+/* Pour que le p arrive après le h1 */
+section .animate-p {
+    transition-delay: 0.5s;
 }
 
 /* Responsive adjustments */
