@@ -30,7 +30,7 @@
         {{-- SIDEBAR --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit lg:hidden">
             @if (request()->is('/'))
-                <livewire:navigationsidebar-home />
+                <livewire:navigation.sidebar-home />
             @elseif (request()->is('blog*'))
                 <livewire:navigation.sidebar-blog />
             @endif
