@@ -56,7 +56,7 @@ new class extends Component {
             link="{{ str_starts_with($menu->link, '/category/') ? '/blog' . $menu->link : $menu->link }}" />
         @endif
         @endforeach
-        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="#" />
+        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @else
         <x-menu-item title="{{ __('Login') }}" link="/login" />
         <x-menu-separator />
@@ -82,7 +82,7 @@ new class extends Component {
                 class="w-7 h-7" /></a>
         @endif
         @endauth
-        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="#" />
+        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @endif
 
     </x-menu>
