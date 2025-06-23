@@ -96,7 +96,7 @@ new class extends Component {
                     <!-- Menus dynamiques -->
 
                     <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
-                    <livewire:blog.search />
+                  
 
                     @if ($user = auth()->user())
                     <x-dropdown>
