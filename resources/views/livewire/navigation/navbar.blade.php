@@ -82,21 +82,22 @@ new class extends Component {
                         @endif
                         @endforeach
                     </x-dropdown>
+                     @auth
+                    @if ($user->favoritePosts()->exists())
+                    <a  title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                            class="w-7 h-7" /></a>
+                    @endif
+                    @endauth
                     <x-menu>
                         <x-menu-item title="{{ __('Contact') }}" link="{{ route('blog.contact') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
-                    @auth
-                    @if ($user->favoritePosts()->exists())
-                    <a title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
-                            class="w-7 h-7" /></a>
-                    @endif
-                    @endauth
+
 
                     <!-- Menus dynamiques -->
 
                     <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
-                  
+
 
                     @if ($user = auth()->user())
                     <x-dropdown>

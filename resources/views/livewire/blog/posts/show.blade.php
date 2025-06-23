@@ -44,6 +44,15 @@ new class extends Component {
                 @lang('Show this category')
             </x-slot:content>
         </x-popover>
+         <x-popover>
+            <x-slot:trigger>
+                <a href="#bottom"><x-icon name="c-arrow-long-down" /></a>
+            </x-slot:trigger>
+            <x-slot:content class="pop-small">
+                @lang('To bottom')
+            </x-slot:content>
+        </x-popover>
+    </div>
     </div>
     <x-header title="{!! $post->title !!}" subtitle="{{ ucfirst($post->created_at->isoFormat('LLLL')) }}"
         size="text-2xl sm:text-3xl md:text-4xl" />
@@ -72,7 +81,15 @@ new class extends Component {
         </em>
     </div>
     <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
-        @if ($commentsCount > 0)
+     <x-popover>
+            <x-slot:trigger>
+                <a href="#top"><x-icon name="c-arrow-long-up" />
+            </x-slot:trigger>
+            <x-slot:content class="pop-small">
+                @lang('To up')
+            </x-slot:content>
+        </x-popover>
+    @if ($commentsCount > 0)
             <div class="flex justify-center">
                 <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
                     wire:click="showComments" class="btn-outline" />

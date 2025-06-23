@@ -56,6 +56,12 @@ new class extends Component {
             link="{{ str_starts_with($menu->link, '/category/') ? '/blog' . $menu->link : $menu->link }}" />
         @endif
         @endforeach
+           @auth
+                    @if ($user->favoritePosts()->exists())
+                    <a class="ps-2"  title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                            class="w-7 h-7" /></a>
+                    @endif
+                    @endauth
         <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @else
         <x-menu-item title="{{ __('Login') }}" link="/login" />
