@@ -14,6 +14,7 @@ Volt::route('/blog/posts/{slug}', 'posts.show')->name('posts.show');
 Volt::route('/blog/category/{slug}', 'blog.index')->name('blog.category');
 Volt::route('/blog/search/{param}', 'blog.index')->name('posts.search');
 Volt::route('/blog/pages/{page:slug}', 'pages.show')->name('pages.show');
+Volt::route('blog/contact', 'blog.contact')->name('blog.contact');
 
 
 Volt::route('/pages/{page:slug}', 'page')->name('pages');

@@ -83,7 +83,7 @@ new class extends Component {
                         @endforeach
                     </x-dropdown>
                     <x-menu>
-                        <x-menu-item title="{{ __('Contact') }}" link="{{ route('contact') }}"
+                        <x-menu-item title="{{ __('Contact') }}" link="{{ route('blog.contact') }}"
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
                     @auth
