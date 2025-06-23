@@ -61,11 +61,8 @@ new class extends Component {
                             class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
                     </x-menu>
 
-                    <x-menu>
-                        <x-menu-item title="{{ __('Contact') }}" link="{{ route('contact') }}"
-                            class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
-                    </x-menu>
-                    <!-- Menus statiques -->
+
+
                     <x-dropdown label="Categories" class=" btn-outline font-bold border  flex items-center justify-center hover:text-gray-700 hover:bg-gray-100 ">
                         @foreach ($menus as $menu)
                         @if ($menu->submenus->isNotEmpty())
@@ -85,7 +82,10 @@ new class extends Component {
                         @endif
                         @endforeach
                     </x-dropdown>
-
+                    <x-menu>
+                        <x-menu-item title="{{ __('Contact') }}" link="{{ route('blog.contact') }}"
+                            class="btn-outline font-bold border h-12 flex items-center justify-center hover:text-gray-700 hover:bg-gray-100" />
+                    </x-menu>
                     @auth
                     @if ($user->favoritePosts()->exists())
                     <a title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"

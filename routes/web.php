@@ -5,20 +5,24 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminOrRedac;
 
+//TODO : routes simplifiees
+
+
 Volt::route('/', 'index')->name('index');
 Volt::route('/blog', 'blog.index')->name('blog.index');
 Volt::route('/blog/posts/{slug}', 'posts.show')->name('posts.show');
 Volt::route('/blog/category/{slug}', 'blog.index')->name('blog.category');
 Volt::route('/blog/search/{param}', 'blog.index')->name('posts.search');
 Volt::route('/blog/pages/{page:slug}', 'pages.show')->name('pages.show');
+Volt::route('blog/contact', 'blog.contact')->name('blog.contact');
 
 
 Volt::route('/pages/{page:slug}', 'page')->name('pages');
 Volt::route('/services/e-commerce', 'services.e-commerce')->name('services.e-commerce');
 Volt::route('/services/site-vitrine', 'services.site-vitrine')->name('services.site-vitrine');
 
-Volt::route('services/marketing-digital', 'services.marketing-digital')->name('services.marketing-digital');
-Volt::route('portfolio', 'portfolio')->name('portfolio');
+Volt::route('/services/marketing-digital', 'services.marketing-digital')->name('services.marketing-digital');
+Volt::route('/portfolio', 'portfolio')->name('portfolio');
 
 
 // route contact

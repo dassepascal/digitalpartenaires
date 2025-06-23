@@ -14,8 +14,10 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'title'=> env('APP_TITLE', 'Titre'),
-    'subTitle'=> env('APP_SUBTITLE', 'Soustitre'),
+    'titleAgency'=> env('APP_TITLE', 'Digital Partenaire'),
+    'subTitleAgency'=> env('APP_SUBTITLE', 'Solutions informatiques innovantes pour votre entreprise'),
+    'title' => env('APP_TITLE', 'Mon Blog'),
+    'subTitle' => env('APP_SUBTITLE', 'my subtitle'),
 
     /*
     |--------------------------------------------------------------------------

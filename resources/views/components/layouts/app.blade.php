@@ -12,14 +12,18 @@
 
 <body class="min-h-screen font-sans antialiased bg-base-200/50 dark:bg-base-200">
     {{-- HERO --}}
-    {{-- add condition si on est sur la page d'accueil ('/') on affiche le hero sinon ('/blog.index') on affiche le blog-hero --}}
 
-    @if (request()->is('/'))
+    @if (
+        request()->is('/') ||
+        request()->is('portfolio') ||
+        request()->is('services*') ||
+        request()->is('contact')
+    )
         <livewire:hero />
     @elseif (request()->is('blog*'))
         <livewire:blog-hero />
     @endif
-    {{-- <livewire:hero /> --}}
+
 
     {{-- NAVBAR --}}
     <livewire:navigation.navbar :menus="$menus" />
@@ -29,7 +33,11 @@
 
         {{-- SIDEBAR --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit lg:hidden">
-            <livewire:navigation.sidebar :menus="$menus" />
+            @if (request()->is('blog*'))
+                <livewire:navigation.sidebar-blog :menus="$menus" />
+            @else
+                <livewire:navigation.sidebar-home />
+            @endif
         </x-slot:sidebar>
 
         {{-- SLOT --}}

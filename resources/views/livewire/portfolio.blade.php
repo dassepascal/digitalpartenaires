@@ -7,13 +7,14 @@ new class extends Component {
 }; ?>
 
 <div>
+   
     <x-card title="Your stats" subtitle="Our findings about you" shadow separator>
         I have title, subtitle, separator and shadow.
     </x-card>
-     
+
     <x-card title="Nice things">
         I am using slots here.
-     
+
         <x-slot:figure>
             <img src="https://picsum.photos/500/200" />
         </x-slot:figure>
