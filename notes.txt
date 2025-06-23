@@ -3,3 +3,8 @@
 le profil
 
 php artisan make:volt account/profile --class
+
+
+modifier le landingpage pour porfolio
+style page agency
+partie admin
