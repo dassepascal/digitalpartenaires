@@ -149,7 +149,11 @@ new class extends Component
             return;
         }
 
-        $subs = User::newsletterSubscribers()->validUsers()->get();
+        // Correction ici : récupérer les utilisateurs abonnés et valides
+        $subs = User::where('newsletter', true)
+            ->where('valid', true)
+            ->get();
+
         foreach ($subs as $user) {
             $n->subscribers()->attach($user->id, ['sent_at' => now()]);
         }
