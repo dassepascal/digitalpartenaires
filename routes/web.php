@@ -91,6 +91,10 @@ Volt::route('/blog/favorites', 'blog.index')->name('posts.favorites');
             Volt::route('/images/index', 'admin.blog.images.index')->name('admin.blog.images.index');
             Volt::route('/images/{year}/{month}/{id}/edit', 'admin.blog.images.edit')->name('admin.blog.images.edit');
             Volt::route('/settings', 'admin.blog.settings')->name('admin.blog.settings');
+             Volt::route('/newsletter', 'admin.newsletter')->name('newsletter');
+            Volt::route('/newsletters', 'admin.newsletters')->name('newsletters')->middleware('can:manage-newsletters');
+            Volt::route('/newsletter/subscription', 'admin.newsletter-subscription')->name('newsletter-subscription');
+
 
 
         });
