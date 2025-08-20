@@ -44,7 +44,7 @@ class NewsletterService
                     'opened' => false,
                     'clicked' => false,
                 ]);
-                dump(\App\Models\NewsletterSubscriber::all());
+              
                 $sentCount++;
             } catch (\Exception $e) {
                 $failedCount++;

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('firstname');
             $table->string('email')->unique();
-            $table->boolean('newsletter');
+            $table->boolean('newsletter')->default(false);
             $table->boolean('valid')->default(false);
             $table->enum('role', ['user', 'redac', 'admin'])->default('user');
             $table->string('password');
