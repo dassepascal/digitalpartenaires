@@ -37,17 +37,18 @@ class NewsletterService
             try {
                 // Envoyer l'email
                 Mail::to($subscriber->email)->send(new NewsletterMail($newsletter, $subscriber));
-
-                // Enregistrer l'envoi
-                $newsletter->subscribers()->attach($subscriber->id, [
+                \App\Models\NewsletterSubscriber::create([
+                    'newsletter_id' => $newsletter->id,
+                    'user_id' => $subscriber->id,
                     'sent_at' => now(),
+                    'opened' => false,
+                    'clicked' => false,
                 ]);
-
+                dump(\App\Models\NewsletterSubscriber::all());
                 $sentCount++;
-
             } catch (\Exception $e) {
-                Log::error("Erreur envoi newsletter {$newsletter->id} à {$subscriber->email}: " . $e->getMessage());
                 $failedCount++;
+                Log::error('Newsletter send failed for user '.$subscriber->id.': '.$e->getMessage());
             }
         }
 

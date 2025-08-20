@@ -49,7 +49,7 @@ class Newsletter extends Model
 
     public function subscriberRecords(): HasMany
     {
-        return $this->hasMany(NewsletterSubscriber::class);
+        return $this->hasMany(\App\Models\NewsletterSubscriber::class, 'newsletter_id', 'id');
     }
 
     // Scopes

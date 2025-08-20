@@ -69,7 +69,8 @@ new class extends Component
         $categories = NewsletterCategory::active()->get();
 
         // Correction ici : compter les utilisateurs abonnés et valides
-        $subscribersCount = User::where('newsletter', true)
+        $subscribersCount = User::query()
+            ->where('newsletter', true)
             ->where('valid', true)
             ->count();
 

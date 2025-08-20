@@ -92,15 +92,15 @@ class User extends Authenticatable
     }
 
       public function newsletters(): BelongsToMany
+      {
+          return $this->belongsToMany(Newsletter::class, 'newsletter_subscribers')
+              ->withPivot(['sent_at', 'opened', 'opened_at', 'clicked', 'clicked_at'])
+              ->withTimestamps();
+      }
+    public function createdNewsletters(): HasMany
     {
-        return $this->belongsToMany(Newsletter::class, 'newsletter_subscribers')
-            ->withPivot(['sent_at', 'opened', 'opened_at', 'clicked', 'clicked_at'])
-            ->withTimestamps();
+        return $this->hasMany(Newsletter::class, 'created_by');
     }
-  public function createdNewsletters(): HasMany
-  {
-      return $this->hasMany(Newsletter::class, 'created_by');
-  }
     public function newsletterSubscriptions(): HasMany
     {
         return $this->hasMany(NewsletterSubscriber::class);
@@ -145,6 +145,18 @@ class User extends Authenticatable
     public function hasRole(string $role): bool
     {
         return $this->role === $role;
+    }
+
+    // Scope pour les abonnés à la newsletter
+    public function scopeNewsletterSubscribers($query)
+    {
+        return $query->where('newsletter', true);
+    }
+
+    // Scope pour les utilisateurs valides
+    public function scopeValidUsers($query)
+    {
+        return $query->where('valid', true);
     }
 
 }
