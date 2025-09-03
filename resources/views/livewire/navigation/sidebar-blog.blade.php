@@ -90,6 +90,6 @@ new class extends Component {
         @endauth
         <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @endif
-
+  <x-menu-item title="{{ __('Digital partenaire') }}" icon="" link="{{ route('index') }}" />
     </x-menu>
 </div>

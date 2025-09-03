@@ -82,9 +82,9 @@ new class extends Component {
                         @endif
                         @endforeach
                     </x-dropdown>
-                     @auth
+                    @auth
                     @if ($user->favoritePosts()->exists())
-                    <a  title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                    <a title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
                             class="w-7 h-7" /></a>
                     @endif
                     @endauth
@@ -96,7 +96,9 @@ new class extends Component {
 
                     <!-- Menus dynamiques -->
 
-                    <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
+                    <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8 " />
+
+
 
 
                     @if ($user = auth()->user())
@@ -106,7 +108,7 @@ new class extends Component {
                                 class="btn-ghost h-10 flex items-center justify-center" />
                         </x-slot:trigger>
 
-                        <span class="text-black">
+                        <span class="text-black bg-red-500">
                             @if ($user->isAdmin())
                             <x-menu-item title="{{ __('Administration') }}" link="{{ route('admin.dashboard') }}" />
                             @endif
@@ -172,11 +174,12 @@ new class extends Component {
                     <x-button label="{{ __('Login') }}" link="/login"
                         class="btn-outline flex items-center hover:bg-gray-300" />
                     @endif
-                    <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
+
                 </div>
                 @endif
 
             </span>
+            <x-theme-toggle title="{{ __('Toggle theme') }}" class="w-4 h-8" />
         </x-slot:actions>
     </x-nav>
 </div> <!-- Fin de l'élément parent -->
