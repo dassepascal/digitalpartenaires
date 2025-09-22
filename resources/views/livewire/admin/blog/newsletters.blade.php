@@ -1,11 +1,17 @@
 <?php
 
+use App\Models\User;
+use App\Models\Newsletter;
+use Illuminate\Support\Str;
+use App\Mail\NewsletterMail;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-use App\Models\Newsletter;
 use App\Models\NewsletterCategory;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Livewire\Attributes\{Layout, Title};
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +24,8 @@ use Illuminate\Support\Facades\Auth;
 | dans un seul fichier extrêmement lisible.
 */
 
-new class extends Component
+new #[Title('Newsletters')] #[Layout('components.layouts.admin')]
+class extends Component
 {
     use WithPagination;
 
@@ -43,13 +50,13 @@ new class extends Component
         'content'           => 'required|string',
         'status'            => 'required|in:draft,scheduled,sent',
         'scheduled_at'      => 'nullable|date|after:now',
-        'selectedCategories'=> 'array',
+        'selectedCategories' => 'array',
     ];
 
     public function mount(): void
     {
-        if (! Auth::user()?->canManageNewsletters()) {
-            abort(403, 'Accès non autorisé');
+        if (! Auth::user()->canManageNewsletters()) {
+            abort(403, __('403 Forbidden'));
         }
     }
 
@@ -60,23 +67,21 @@ new class extends Component
     {
         $newsletters = Newsletter::query()
             ->when($this->search, fn($q) => $q->where('title', 'like', "%{$this->search}%")
-                                             ->orWhere('subject', 'like', "%{$this->search}%"))
+                ->orWhere('subject', 'like', "%{$this->search}%"))
             ->when($this->statusFilter !== 'all', fn($q) => $q->where('status', $this->statusFilter))
-            ->with(['creator','categories'])
+            ->with(['creator', 'categories'])
             ->orderByDesc('created_at')
             ->paginate(10);
 
         $categories = NewsletterCategory::active()->get();
 
-        // Correction ici : compter les utilisateurs abonnés et valides
         $subscribersCount = User::query()
-            ->where('newsletter', true)
-            ->where('valid', true)
+            ->where('newsletter', 1) // Utiliser 1 explicitement
+            ->where('valid', 1)      // Utiliser 1 explicitement
             ->count();
 
-        return compact('newsletters','categories','subscribersCount');
+        return compact('newsletters', 'categories', 'subscribersCount');
     }
-
     /* ---------------------------------------------------------------------
     | Actions CRUD & Business
     |---------------------------------------------------------------------*/
@@ -84,7 +89,7 @@ new class extends Component
     public function openModal(?int $id = null): void
     {
         $this->resetValidation();
-        $this->reset(['title','subject','content','status','scheduled_at','selectedCategories']);
+        $this->reset(['title', 'subject', 'content', 'status', 'scheduled_at', 'selectedCategories']);
 
         if ($id) {
             $n = Newsletter::with('categories')->findOrFail($id);
@@ -105,7 +110,7 @@ new class extends Component
     public function closeModal(): void
     {
         $this->showModal = false;
-        $this->reset(['title','subject','content','status','scheduled_at','selectedCategories','editingId']);
+        $this->reset(['title', 'subject', 'content', 'status', 'scheduled_at', 'selectedCategories', 'editingId']);
         $this->resetValidation();
     }
 
@@ -127,7 +132,7 @@ new class extends Component
 
         $newsletter->categories()->sync($this->selectedCategories);
 
-        session()->flash('message', 'Newsletter '.($this->editingId ? 'mise à jour' : 'créée').' avec succès !');
+        session()->flash('message', 'Newsletter ' . ($this->editingId ? 'mise à jour' : 'créée') . ' avec succès !');
         $this->closeModal();
     }
 
@@ -150,13 +155,38 @@ new class extends Component
             return;
         }
 
-        // Correction ici : récupérer les utilisateurs abonnés et valides
         $subs = User::where('newsletter', true)
             ->where('valid', true)
             ->get();
 
         foreach ($subs as $user) {
-            $n->subscribers()->attach($user->id, ['sent_at' => now()]);
+            $newsletter = Newsletter::findorFail($id);
+            // Tokens de suivi et de désinscription (ici, générés à la volée)
+            $trackingToken    = Str::random(16);
+            $unsubscribeToken = Str::random(32);
+
+            // Sauvegarde en base dans newsletter_tokens
+            DB::table('newsletter_tokens')->insert([
+                'newsletter_id'      => $newsletter->id,
+                'user_id'            => $user->id,
+                'tracking_token'     => $trackingToken,
+                'unsubscribe_token'  => $unsubscribeToken,
+                'generated_at'       => now(),
+                'created_at'         => now(),
+                'updated_at'         => now(),
+            ]);
+
+            // Envoi du mail
+            Mail::to($user->email)->send(
+                new NewsletterMail($n, $user, $trackingToken, $unsubscribeToken)
+            );
+
+            // Marquer l’abonné comme ayant reçu
+            $n->subscribers()->attach($user->id, [
+                'sent_at' => now(),
+                'tracking_token' => $trackingToken,
+                'unsubscribe_token' => $unsubscribeToken,
+            ]);
         }
 
         $n->update([
@@ -164,14 +194,15 @@ new class extends Component
             'sent_at'    => now(),
             'sent_count' => $subs->count(),
         ]);
-        session()->flash('message', "Newsletter envoyée à {$subs->count()} abonnés !");
+
+        session()->flash('message', "Newsletter envoyée à {$subs->count()} abonnés !");
     }
 
     public function duplicate(int $id): void
     {
         $n = Newsletter::with('categories')->findOrFail($id);
         $new = Newsletter::create([
-            'title'      => $n->title.' (Copie)',
+            'title'      => $n->title . ' (Copie)',
             'subject'    => $n->subject,
             'content'    => $n->content,
             'status'     => 'draft',
@@ -184,22 +215,33 @@ new class extends Component
     /* ---------------------------------------------------------------------
     | Hooks pour les filtres
     |---------------------------------------------------------------------*/
-    public function updatedSearch(): void { $this->resetPage(); }
-    public function updatedStatusFilter(): void { $this->resetPage(); }
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedStatusFilter(): void
+    {
+        $this->resetPage();
+    }
 }
 ?>
 
 {{-- ---------------------------------------------------------------------------
 | Template Blade/HTML
 --------------------------------------------------------------------------- --}}
-<div class="p-6">
+<div>
     {{-- Header --}}
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Gestion des Newsletters</h1>
-        <button wire:click="openModal" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-            Nouvelle Newsletter
-        </button>
-    </div>
+
+    <x-header title="{{ __('Gestion des newsletters') }}" separator progress-indicator>
+        <x-slot:actions class="lg:hidden">
+            <x-button icon="s-building-office-2" label="{{ __('Dashboard') }}" class="btn-outline"
+                link="{{ route('admin.dashboard') }}" />
+        </x-slot:actions>
+    </x-header>
+    <button wire:click="openModal" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg my-4">
+        Nouvelle Newsletter
+    </button>
+
 
     {{-- Statistiques --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -223,11 +265,11 @@ new class extends Component
 
     {{-- Flash messages --}}
     @foreach (['message' => 'green', 'error' => 'red'] as $msg => $color)
-        @if (session()->has($msg))
-            <div class="bg-{{ $color }}-100 border border-{{ $color }}-400 text-{{ $color }}-700 px-4 py-3 rounded mb-4">
-                {{ session($msg) }}
-            </div>
-        @endif
+    @if (session()->has($msg))
+    <div class="bg-{{ $color }}-100 border border-{{ $color }}-400 text-{{ $color }}-700 px-4 py-3 rounded mb-4">
+        {{ session($msg) }}
+    </div>
+    @endif
     @endforeach
 
     {{-- Table des newsletters --}}
@@ -245,53 +287,58 @@ new class extends Component
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse ($newsletters as $n)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $n->title }}</div>
-                                <div class="text-sm text-gray-500">{{ $n->subject }}</div>
-                                @if ($n->categories->count())
-                                    <div class="mt-1 space-x-1">
-                                        @foreach ($n->categories as $cat)
-                                            <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">{{ $cat->name }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @php $color = match($n->status) {
-                                    'draft'     => 'yellow',
-                                    'scheduled' => 'blue',
-                                    default     => 'green'
-                                }; @endphp
-                                <span class="px-2 py-1 text-xs rounded-full bg-{{ $color }}-100 text-{{ $color }}-800">
-                                    {{ ucfirst($n->status) }}
-                                </span>
-                                @if ($n->status === 'sent')
-                                    <div class="text-xs text-gray-500 mt-1">{{ $n->sent_count }} envois</div>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $n->creator->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $n->created_at->format('d/m/Y H:i') }}
-                                @if($n->scheduled_at)
-                                    <div class="text-xs text-blue-600">Programmée: {{ $n->scheduled_at->format('d/m/Y H:i') }}</div>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <button wire:click="openModal({{ $n->id }})" class="text-blue-600 hover:text-blue-900">Modifier</button>
-                                @if($n->status !== 'sent')
-                                    <button wire:click="sendNewsletter({{ $n->id }})" class="text-green-600 hover:text-green-900" wire:confirm="Envoyer cette newsletter ?">Envoyer</button>
-                                @endif
-                                <button wire:click="duplicate({{ $n->id }})" class="text-purple-600 hover:text-purple-900">Dupliquer</button>
-                                @if($n->status !== 'sent')
-                                    <button wire:click="delete({{ $n->id }})" class="text-red-600 hover:text-red-900" wire:confirm="Supprimer cette newsletter ?">Supprimer</button>
-                                @endif
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">{{ $n->title }}</div>
+                            <div class="text-sm text-gray-500">{{ $n->subject }}</div>
+                            @if ($n->categories->count())
+                            <div class="mt-1 space-x-1">
+                                @foreach ($n->categories as $cat)
+                                <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">{{ $cat->name }}</span>
+                                @endforeach
+                            </div>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @php $color = match($n->status) {
+                            'draft' => 'yellow',
+                            'scheduled' => 'blue',
+                            default => 'green'
+                            }; @endphp
+                            <span class="px-2 py-1 text-xs rounded-full bg-{{ $color }}-100 text-{{ $color }}-800">
+                                {{ ucfirst($n->status) }}
+                            </span>
+                            @if ($n->status === 'sent')
+                            <div class="text-xs text-gray-500 mt-1">{{ $n->sent_count }} envois</div>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $n->creator->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $n->created_at->format('d/m/Y H:i') }}
+                            @if($n->scheduled_at)
+                            <div class="text-xs text-blue-600">Programmée: {{ $n->scheduled_at->format('d/m/Y H:i') }}</div>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button wire:click="openModal({{ $n->id }})" class="text-blue-600 hover:text-blue-900">Modifier</button>
+                            @if($n->status !== 'sent')
+                            {{-- <button wire:click="sendNewsletter({{ $n->id }})" class="text-green-600 hover:text-green-900" wire:confirm="Envoyer cette newsletter ?">Envoyer</button> --}}
+                            <button wire:click="sendNewsletter({{ $n->id }})"
+                                class="text-green-600 hover:text-green-900">
+                                Envoyer
+                            </button>
+
+                            @endif
+                            <button wire:click="duplicate({{ $n->id }})" class="text-purple-600 hover:text-purple-900">Dupliquer</button>
+                            @if($n->status !== 'sent')
+                            <button wire:click="delete({{ $n->id }})" class="text-red-600 hover:text-red-900" wire:confirm="Supprimer cette newsletter ?">Supprimer</button>
+                            @endif
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">Aucune newsletter trouvée.</td>
-                        </tr>
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">Aucune newsletter trouvée.</td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -301,54 +348,56 @@ new class extends Component
 
     {{-- Modal de création / édition --}}
     @if ($showModal)
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-start justify-center pt-20 z-50">
-            <div class="bg-white w-11/12 md:w-3/4 lg:w-1/2 rounded-lg shadow-lg p-6 relative">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-medium">{{ $editingId ? 'Modifier' : 'Nouvelle' }} newsletter</h3>
-                    <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-start justify-center pt-20 z-50">
+        <div class="bg-white w-11/12 md:w-3/4 lg:w-1/2 rounded-lg shadow-lg p-6 relative">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-medium">{{ $editingId ? 'Modifier' : 'Nouvelle' }} newsletter</h3>
+                <button wire:click="closeModal" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <form wire:submit.prevent="save" class="space-y-4">
+                <x-input-group label="Titre" model="title" required />
+                <x-input-group label="Sujet" model="subject" required />
+
+                @if($categories->count())
+                <div>
+                    <label class="block text-sm font-medium mb-1">Catégories</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        @foreach($categories as $cat)
+                        <label class="flex items-center space-x-2 text-sm">
+                            <input type="checkbox" wire:model="selectedCategories" value="{{ $cat->id }}" class="rounded border-gray-300" />
+                            <span>{{ $cat->name }}</span>
+                        </label>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                <x-textarea-group label="Contenu" model="content" rows="10" required />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Statut</label>
+                        <select wire:model="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="draft">Brouillon</option>
+                            <option value="scheduled">Programmée</option>
+                        </select>
+                    </div>
+                    @if($status === 'scheduled')
+                    <x-input-group type="datetime-local" label="Date de programmation" model="scheduled_at" />
+                    @endif
                 </div>
 
-                <form wire:submit.prevent="save" class="space-y-4">
-                    <x-input-group label="Titre" model="title" required />
-                    <x-input-group label="Sujet" model="subject" required />
-
-                    @if($categories->count())
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Catégories</label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-                                @foreach($categories as $cat)
-                                    <label class="flex items-center space-x-2 text-sm">
-                                        <input type="checkbox" wire:model="selectedCategories" value="{{ $cat->id }}" class="rounded border-gray-300" />
-                                        <span>{{ $cat->name }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-                    <x-textarea-group label="Contenu" model="content" rows="10" required />
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Statut</label>
-                            <select wire:model="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                                <option value="draft">Brouillon</option>
-                                <option value="scheduled">Programmée</option>
-                            </select>
-                        </div>
-                        @if($status === 'scheduled')
-                            <x-input-group type="datetime-local" label="Date de programmation" model="scheduled_at" />
-                        @endif
-                    </div>
-
-                    <div class="flex justify-end space-x-3 pt-4">
-                        <button type="button" wire:click="closeModal" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Annuler</button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">{{ $editingId ? 'Mettre à jour' : 'Créer' }}</button>
-                    </div>
-                </form>
-            </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" wire:click="closeModal" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Annuler</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">{{ $editingId ? 'Mettre à jour' : 'Créer' }}</button>
+                </div>
+            </form>
         </div>
+    </div>
     @endif
 </div>

@@ -3,80 +3,128 @@
 // app/Services/NewsletterService.php
 namespace App\Services;
 
-use App\Models\Newsletter;
+use Exception;
 use App\Models\User;
+use App\Models\Newsletter;
+use Illuminate\Support\Str;
 use App\Mail\NewsletterMail;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterService
 {
+
+     /**
+     * Génère les tokens de tracking et de désabonnement pour un utilisateur.
+     */
+    public function generateTokens(Newsletter $newsletter, User $user): array
+    {
+        return [
+            'tracking_token'   => hash('sha256', $newsletter->id . '|' . $user->id . '|' . \Illuminate\Support\Str::random(40)),
+            'unsubscribe_token' => hash('sha256', $user->id . '|' . \Illuminate\Support\Str::random(40)),
+        ];
+    }
+    /**
+     * Envoie la newsletter à tous les abonnés valides.
+     */
     public function sendNewsletter(Newsletter $newsletter): array
     {
-        if ($newsletter->status === 'sent') {
-            return [
-                'success' => false,
-                'message' => 'Cette newsletter a déjà été envoyée.'
-            ];
-        }
-
-        // Récupérer tous les abonnés valides
-        $subscribers = User::newsletterSubscribers()->validUsers()->get();
+        $subscribers = User::where('newsletter', true)
+            ->where('valid', true)
+            ->get();
 
         if ($subscribers->isEmpty()) {
             return [
                 'success' => false,
-                'message' => 'Aucun abonné trouvé.'
+                'message' => 'Aucun abonné valide pour envoyer cette newsletter.',
+                'sent_count' => 0,
+                'failed_count' => 0,
             ];
         }
 
-        $sentCount = 0;
+        $sentCount   = 0;
         $failedCount = 0;
 
-        foreach ($subscribers as $subscriber) {
+        foreach ($subscribers as $user) {
             try {
-                // Envoyer l'email
-                Mail::to($subscriber->email)->send(new NewsletterMail($newsletter, $subscriber));
-                \App\Models\NewsletterSubscriber::create([
-                    'newsletter_id' => $newsletter->id,
-                    'user_id' => $subscriber->id,
-                    'sent_at' => now(),
-                    'opened' => false,
-                    'clicked' => false,
+                // Générer les tokens
+                $trackingToken    = Str::random(64);
+                $unsubscribeToken = Str::random(64);
+
+                // Enregistrer dans newsletter_tokens
+                DB::table('newsletter_tokens')->insert([
+                    'newsletter_id'     => $newsletter->id,
+                    'user_id'           => $user->id,
+                    'tracking_token'    => $trackingToken,
+                    'unsubscribe_token' => $unsubscribeToken,
+                    'generated_at'      => now(),
+                    'created_at'        => now(),
+                    'updated_at'        => now(),
                 ]);
-              
+
+                // Envoi du mail
+                Mail::to($user->email)->send(
+                    new NewsletterMail($newsletter, $user, $trackingToken, $unsubscribeToken)
+                );
+
+                // Marquer l’envoi dans la table pivot newsletter_subscribers
+                $newsletter->subscribers()->attach($user->id, [
+                    'sent_at' => now(),
+                    'tracking_token' => $trackingToken,
+                    'unsubscribe_token' => $unsubscribeToken,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
                 $sentCount++;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $failedCount++;
-                Log::error('Newsletter send failed for user '.$subscriber->id.': '.$e->getMessage());
             }
         }
 
-        // Marquer la newsletter comme envoyée
+        // Mettre à jour la newsletter
         $newsletter->update([
-            'status' => 'sent',
-            'sent_at' => now(),
+            'status'     => 'sent',
+            'sent_at'    => now(),
             'sent_count' => $sentCount,
         ]);
 
         return [
-            'success' => true,
-            'message' => "Newsletter envoyée avec succès à {$sentCount} abonnés." .
-                        ($failedCount > 0 ? " {$failedCount} échecs." : ''),
-            'sent_count' => $sentCount,
+            'success'      => $failedCount === 0,
+            'message'      => "Newsletter envoyée à $sentCount abonnés, $failedCount échecs.",
+            'sent_count'   => $sentCount,
             'failed_count' => $failedCount,
         ];
     }
 
-    public function scheduleNewsletter(Newsletter $newsletter, $scheduledAt): bool
+
+     /**
+     * Désabonner un utilisateur via un token.
+     */
+
+     public function unsubscribeUser(User $user, string $token): bool
     {
-        $newsletter->update([
-            'status' => 'scheduled',
-            'scheduled_at' => $scheduledAt,
-        ]);
+        $record = DB::table('newsletter_tokens')
+            ->where('user_id', $user->id)
+            ->where('unsubscribe_token', $token)
+            ->first();
+
+        if (! $record) {
+            return false;
+        }
+
+        // Marquer le désabonnement
+        DB::table('newsletter_tokens')
+            ->where('id', $record->id)
+            ->update(['unsubscribed_at' => now()]);
+
+        $user->update(['newsletter' => false]);
 
         return true;
     }
+
+
 
     public function processScheduledNewsletters(): array
     {
@@ -152,16 +200,7 @@ class NewsletterService
         }
     }
 
-    public function unsubscribeUser(User $user, $token = null): bool
-    {
-        // Vérifier le token si fourni (pour les liens de désinscription)
-        if ($token && !$this->validateUnsubscribeToken($user, $token)) {
-            return false;
-        }
 
-        $user->update(['newsletter' => false]);
-        return true;
-    }
 
     public function validateUnsubscribeToken(User $user, string $token): bool
     {

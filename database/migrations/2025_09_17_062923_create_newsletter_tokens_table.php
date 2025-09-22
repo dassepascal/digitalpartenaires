@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('unsubscribed_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['newsletter_id', 'user_id']); // éviter doublons
+            //$table->unique(['newsletter_id', 'user_id']); // éviter doublons
         });
     }
 

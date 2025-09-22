@@ -12,14 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('newsletter_subscribers', function (Blueprint $table) {
-           $table->id();
+            $table->id();
             $table->foreignId('newsletter_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->timestamp('sent_at')->nullable();
+            $table->string('tracking_token')->nullable()->unique();
+            $table->string('unsubscribe_token')->nullable()->unique();
+
             $table->boolean('opened')->default(false);
             $table->timestamp('opened_at')->nullable();
             $table->boolean('clicked')->default(false);
             $table->timestamp('clicked_at')->nullable();
+
+            $table->timestamp('unsubscribed_at')->nullable();
+
+
             $table->timestamps();
         });
     }

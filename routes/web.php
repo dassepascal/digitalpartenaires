@@ -7,7 +7,7 @@ use App\Services\NewsletterService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminOrRedac;
 use App\Models\User;
-
+use Illuminate\Http\Request;
 
 
 //TODO : routes simplifiees
