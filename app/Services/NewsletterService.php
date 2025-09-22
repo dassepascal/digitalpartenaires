@@ -102,27 +102,70 @@ class NewsletterService
      /**
      * Désabonner un utilisateur via un token.
      */
-
-     public function unsubscribeUser(User $user, string $token): bool
+public function unsubscribeUser(User $user, string $token): bool
     {
-        $record = DB::table('newsletter_tokens')
+        // Debug: log pour voir ce qui se passe
+        \Log::info('Unsubscribe attempt', [
+            'user_id' => $user->id,
+            'token' => $token,
+            'email' => $user->email
+        ]);
+
+        // Vérifier si le token existe dans newsletter_tokens
+        $tokenRecord = DB::table('newsletter_tokens')
             ->where('user_id', $user->id)
             ->where('unsubscribe_token', $token)
             ->first();
 
-        if (! $record) {
+        if (!$tokenRecord) {
+            \Log::warning('Token not found for user', [
+                'user_id' => $user->id,
+                'token' => $token
+            ]);
             return false;
         }
 
-        // Marquer le désabonnement
+        // Désinscrire l'utilisateur
+        $user->update(['newsletter' => false]);
+
+        // Marquer le token comme utilisé
         DB::table('newsletter_tokens')
-            ->where('id', $record->id)
+            ->where('id', $tokenRecord->id)
             ->update(['unsubscribed_at' => now()]);
 
-        $user->update(['newsletter' => false]);
+        \Log::info('User unsubscribed successfully', [
+            'user_id' => $user->id,
+            'email' => $user->email
+        ]);
 
         return true;
     }
+
+    public function validateTrackingToken(Newsletter $newsletter, User $user, string $token): bool
+    {
+        return DB::table('newsletter_tokens')
+            ->where('newsletter_id', $newsletter->id)
+            ->where('user_id', $user->id)
+            ->where('tracking_token', $token)
+            ->exists();
+    }
+
+    public function trackOpen(Newsletter $newsletter, User $user): void
+    {
+        DB::table('newsletter_tokens')
+            ->where('newsletter_id', $newsletter->id)
+            ->where('user_id', $user->id)
+            ->update(['opened_at' => now()]);
+    }
+
+    public function trackClick(Newsletter $newsletter, User $user): void
+    {
+        DB::table('newsletter_tokens')
+            ->where('newsletter_id', $newsletter->id)
+            ->where('user_id', $user->id)
+            ->update(['clicked_at' => now()]);
+    }
+
 
 
 
@@ -163,42 +206,7 @@ class NewsletterService
         ];
     }
 
-    public function trackOpen(Newsletter $newsletter, User $user): void
-    {
-        $subscriber = $newsletter->subscriberRecords()
-            ->where('user_id', $user->id)
-            ->first();
 
-        if ($subscriber && !$subscriber->opened) {
-            $subscriber->update([
-                'opened' => true,
-                'opened_at' => now(),
-            ]);
-        }
-    }
-
-    public function trackClick(Newsletter $newsletter, User $user): void
-    {
-        $subscriber = $newsletter->subscriberRecords()
-            ->where('user_id', $user->id)
-            ->first();
-
-        if ($subscriber) {
-            if (!$subscriber->opened) {
-                $subscriber->update([
-                    'opened' => true,
-                    'opened_at' => now(),
-                ]);
-            }
-
-            if (!$subscriber->clicked) {
-                $subscriber->update([
-                    'clicked' => true,
-                    'clicked_at' => now(),
-                ]);
-            }
-        }
-    }
 
 
 
@@ -227,9 +235,5 @@ class NewsletterService
         return hash('sha256', $newsletter->id . $user->id . config('app.key'));
     }
 
-    public function validateTrackingToken(Newsletter $newsletter, User $user, string $token): bool
-    {
-        $expectedToken = $this->generateTrackingToken($newsletter, $user);
-        return hash_equals($expectedToken, $token);
-    }
+   
 }
