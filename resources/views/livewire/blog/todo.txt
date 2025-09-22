@@ -1,0 +1,6 @@
+fichier s
+NewsletterSendJob
+SendNewsletter
+design :Auth  login.blade + reset password + sidebar (administration  )
+creation de la table pivot : personal_access_token
+newsletter_tokens
