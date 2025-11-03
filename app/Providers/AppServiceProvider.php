@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Menu;
-
 use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\{Blade,View};
+use App\Policies\ManageNewsletterPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 }])->orderBy('order')->get()
             );
         });
+
+          \Illuminate\Support\Facades\Gate::define('manage-newsletters', [ManageNewsletterPolicy::class, 'manage']);
     }
 }

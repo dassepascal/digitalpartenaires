@@ -58,6 +58,8 @@ new class extends Component {
 
 
     <div class="relative grid items-center w-full py-5 mx-auto  md:px-12 max-w-7xl mt-5 ">
+        
+          <livewire:blog.search />
         @if ($category)
         <x-header title="{{ __('Posts for category ') }} {{ $category->title }}" size="text-2xl sm:text-3xl md:text-4xl" />
         @elseif($param !== '')
@@ -76,7 +78,7 @@ new class extends Component {
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse($posts as $post)
                 <x-card
-                    class="w-full transition duration-500 ease-in-out shadow-md shadow-gray-500 hover:shadow-xl hover:shadow-gray-500"
+                    class="w-full transition duration-500 ease-in-out shadow-md shadow-gray-500 hover:shadow-xl hover:shadow-gray-500 "
                     title="{!! $post->title !!}">
 
                     <div class="text-justify">{!! str(strip_tags($post->excerpt))->words(config('app.excerptSize')) !!}</div>

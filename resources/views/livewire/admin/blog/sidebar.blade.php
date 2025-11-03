@@ -31,6 +31,8 @@
 
             </x-menu-sub>
             <x-menu-item icon="c-photo" title="{{ __('Images') }}" link="{{ route('admin.blog.images.index') }}" />
+            <x-menu-item icon="m-newspaper" title="{{ __('NewslettersManager') }}"
+                link="{{ route('admin.blog.newsletters') }}" :class="App::isDownForMaintenance() ? 'bg-red-300' : ''" />
             <x-menu-item icon="m-cog-8-tooth" title="{{ __('Settings') }}" link="{{ route('admin.blog.settings') }}"
                 :class="App::isDownForMaintenance() ? 'bg-red-300' : ''" />
         @endif

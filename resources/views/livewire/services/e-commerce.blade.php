@@ -14,21 +14,21 @@ new class extends Component {
 <div style="max-width: 700px; margin: 0 auto;">
     {{-- title --}}
     <x-header title="E-commerce"  separator />
-    
-    <x-card title="Boostez vos ventes avec l'e-commerce: Le guide ultime pour les PME et les entreprises." shadow separator>
+
+    <x-card title="Boostez vos ventes avec l'e-commerce :  Le guide ultime pour les PME et les entreprises." shadow separator>
         <p>Que vous dirigiez une PME ou envisagiez de lancer votre entreprise, l'e-commerce est devenu une nécessité
             plutôt qu'une option. Avec l'énorme potentiel que recèle Internet, augmenter vos ventes n'a jamais été aussi
             facile. Comprendre comment maximiser ces opportunités peut être le facteur qui fera évoluer votre
             entreprise. Voyons comment.</p>
     </x-card>
-    <x-card title="1: Pourquoi l'E-Commerce est-il un levier de croissance pour votre PME?">
-       
+    <x-card title="1: Pourquoi l'E-Commerce est-il un levier de croissance pour votre PME ?">
+
         <x-slot:figure>
             <img src="{{ asset('storage/photos/e-commerce.jpg') }}" alt="image site e-commerce" />
         </x-slot:figure>
-    
+
     <ol>
-        
+
         <li>
             <h2 class=" font-bold mb-2">1.1: Hausse de la demande en ligne.</h2>
             <p class="mb-4">Sherpa Marketing a constaté que les achats en ligne ont augmenté de 69% depuis 2020. Les PME ont donc
@@ -100,10 +100,10 @@ new class extends Component {
         croissance comme jamais auparavant. Alors n'attendez plus, exploitez le potentiel de l'e-commerce dès
         aujourd'hui et regardez vos ventes s'envoler!</p>
 
-        
+
         <x-button label="{{'Demander un devis 😃'}}" class="btn-primary mt-5" link="/contact">
-            
+
         </x-button>
     </x-card>
-   
+
 </div>

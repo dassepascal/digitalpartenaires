@@ -26,7 +26,7 @@ new class extends Component {
 
         @if ($user = auth()->user())
         <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover
-            class="-mx-2 !-my-2 rounded">
+            class="-mx-2 !-my-2 rounded bg-red-500">
             <x-slot:actions>
                 <x-button icon="o-power" wire:click="logout" class="btn-circle btn-ghost btn-xs"
                     tooltip-left="{{ __('Logout') }}" no-wire-navigate />
@@ -56,7 +56,13 @@ new class extends Component {
             link="{{ str_starts_with($menu->link, '/category/') ? '/blog' . $menu->link : $menu->link }}" />
         @endif
         @endforeach
-        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="#" />
+           @auth
+                    @if ($user->favoritePosts()->exists())
+                    <a class="ps-2"  title="{{ __('Favorites posts') }}" href="{{ route('posts.favorites') }}"><x-icon name="s-star"
+                            class="w-7 h-7" /></a>
+                    @endif
+                    @endauth
+        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @else
         <x-menu-item title="{{ __('Login') }}" link="/login" />
         <x-menu-separator />
@@ -82,8 +88,8 @@ new class extends Component {
                 class="w-7 h-7" /></a>
         @endif
         @endauth
-        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="#" />
+        <x-menu-item title="{{ __('Contact') }}" icon="o-envelope" link="{{ route('blog.contact') }}" />
         @endif
-
+  <x-menu-item title="{{ __('Digital partenaire') }}" icon="" link="{{ route('index') }}" />
     </x-menu>
 </div>

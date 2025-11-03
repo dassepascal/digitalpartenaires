@@ -12,8 +12,6 @@ new class() extends Component {
     <nav>
     <a href="{{ route('contact') }}" class="link link-hover">@lang('Contact')
     <a href="{{ route('blog.index') }}" class="link link-hover">@lang('Blog')
-
-
     </nav>
     <nav>
         <a href="{{ route('pages', ['page' => 'politique-de-confidentialite']) }}" class="link link-hover">@lang('Privacy policy')

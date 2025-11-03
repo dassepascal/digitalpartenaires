@@ -21,7 +21,7 @@ new class extends Component {
 }; ?>
 
 <div>
-    <form wire:submit.prevent="save">
+    <form wire:submit.prevent="save" class="p-4">
         <x-input placeholder="{{ __('Search') }}..." wire:model="search" clearable icon="o-magnifying-glass" />
     </form>
 </div>
