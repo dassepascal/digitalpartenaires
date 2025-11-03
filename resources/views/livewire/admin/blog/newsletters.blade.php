@@ -300,13 +300,21 @@ class extends Component
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @php $color = match($n->status) {
+                            @php
+                            $statusTranslations = [
+                            'draft' => __('Brouillon'),
+                            'scheduled' => __('Programmée'),
+                            'sent' => __('Envoyé')
+                            ];
+                            $color = match($n->status) {
                             'draft' => 'yellow',
                             'scheduled' => 'blue',
                             default => 'green'
-                            }; @endphp
+                            };
+                            $translatedStatus = $statusTranslations[$n->status] ?? ucfirst($n->status);
+                            @endphp
                             <span class="px-2 py-1 text-xs rounded-full bg-{{ $color }}-100 text-{{ $color }}-800">
-                                {{ ucfirst($n->status) }}
+                                {{ $translatedStatus }}
                             </span>
                             @if ($n->status === 'sent')
                             <div class="text-xs text-gray-500 mt-1">{{ $n->sent_count }} envois</div>

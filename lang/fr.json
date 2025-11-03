@@ -374,7 +374,6 @@
     "Are you sure to delete this submenu?": "Êtes-vous sûr de vouloir supprimer ce sous-menu ?",
     " deleted with success.": " supprimé avec succès.",
     "Submenu": "Sous-menu",
-
     "Link": "Lien",
     "Select a post, type to search": "Sélectionnez un article, tapez pour rechercher",
     "Select year and month": "Sélectionner l'année et le mois",
@@ -432,10 +431,8 @@
     "It will be validate by an administrator before it appears here": "Il sera valide par un administrateur avant qu'il ne soit affiché ici",
     "Leave a comment": "Laissez un commentaire",
     "Post comment": "Poster un commentaire",
-
     "Update your comment": "Modifier votre commentaire",
     "Are you sure to delete this comment?": "Etes-vous sûr de vouloir supprimer ce commentaire ?",
-
     "Modify": "Modifier",
     "1 comment": "1 commentaire",
     "comments": "commentaires",
@@ -450,5 +447,7 @@
     "Posts for search ": "Articles pour la recherche ",
     "Your favorites posts": "Vos articles favoris",
     "Favorites posts": "Articles favoris",
-    "Navbar": "Barre de navigation"
+    "Navbar": "Barre de navigation",
+    "Scheduled": "Programmée",
+    "scheduled": "programmée"
 }
