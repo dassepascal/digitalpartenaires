@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminOrRedac;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\BlogPage;
 
 
 //TODO : routes simplifiees
@@ -18,7 +19,7 @@ Volt::route('/blog', 'blog.index')->name('blog.index');
 Volt::route('/blog/posts/{slug}', 'posts.show')->name('posts.show');
 Volt::route('/blog/category/{slug}', 'blog.index')->name('blog.category');
 Volt::route('/blog/search/{param}', 'blog.index')->name('posts.search');
-Volt::route('/blog/pages/{page:slug}', 'pages.show')->name('pages.show');
+Volt::route('/blog/pages/{page:slug}', 'blog.pages.show')->name('blog.pages.show');
 Volt::route('blog/contact', 'blog.contact')->name('blog.contact');
 
 
@@ -142,6 +143,8 @@ Volt::route('/blog/favorites', 'blog.index')->name('posts.favorites');
             Volt::route('/comments/index', 'admin.blog.comments.index')->name('admin.blog.comments.index');
             Volt::route('/comments/{comment}/edit', 'admin.blog.comments.edit')->name('admin.blog.comments.edit');
             Volt::route('/menus/index', 'admin.blog.menus.index')->name('admin.blog.menus.index');
+            Volt::route('/footers/index', 'admin.blog.menus.footers')->name('admin.blog.menus.footers');
+             Volt::route('/footers/{footer}/edit', 'admin.blog.menus.editfooter')->name('admin.blog.menus.footers.edit');
             Volt::route('/menus/create', 'admin.blog.menus.create')->name('admin.blog.menus.create');
             Volt::route('/menus/{menu}/edit', 'admin.blog.menus.edit')->name('admin.blog.menus.edit');
             Volt::route('/submenus/{submenu}/edit', 'admin.blog.menus.editsub')->name('admin.blog.submenus.edit');

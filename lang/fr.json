@@ -449,5 +449,10 @@
     "Favorites posts": "Articles favoris",
     "Navbar": "Barre de navigation",
     "Scheduled": "Programmée",
-    "scheduled": "programmée"
+    "scheduled": "programmée",
+    "Footer": "Pieds de page",
+    "Edit a footer": "Modifier le pied de page",
+"Footer deleted with success.": "Pied de page supprimé avec succès.",
+"Create a new footer": "Créer un nouveau pied de page",
+"Are you sure to delete this footer?": "Etes-vous sûr de vouloir supprimer ce menu de pied de page ?"
 }
