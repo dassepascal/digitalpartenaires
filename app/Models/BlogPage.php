@@ -19,4 +19,13 @@ class BlogPage extends Model
 		'meta_description',
 		'meta_keywords',
 	];
+      public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    // Dans app/Models/BlogPage.php
+public function getTranslatedTitleAttribute()
+{
+    return __($this->title);
+}
 }

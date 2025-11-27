@@ -5,6 +5,7 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     public BlogPage $page;
+    public string $title;
 
     public function mount(BlogPage $page): void
     {
@@ -13,6 +14,15 @@ new class extends Component {
         }
 
         $this->page = $page;
+        $this->title = $page->title;
+
+        // Debug complet
+        logger('=== DEBUG BLOG PAGE ===');
+        logger('Title: ' . $page->title);
+        logger('Title length: ' . strlen($page->title));
+        logger('Title empty: ' . (empty($page->title) ? 'YES' : 'NO'));
+        logger('Title null: ' . (is_null($page->title) ? 'YES' : 'NO'));
+        logger('All page data: ' . json_encode($page->toArray()));
     }
 }; ?>
 
@@ -23,42 +33,23 @@ new class extends Component {
 
     <div class="flex justify-end gap-4">
         @auth
-            @if (Auth::user()->isAdmin())
-                <x-popover>
-                    <x-slot:trigger>
-                        <x-button icon="c-pencil-square" link="#" spinner class="btn-ghost btn-sm" />
-                    </x-slot:trigger>
-                    <x-slot:content class="pop-small">
-                        @lang('Edit this page')
-                    </x-slot:content>
-                </x-popover>
-            @endif
+        @if (Auth::user()->isAdmin())
+        <x-popover>
+            <x-slot:trigger>
+                <x-button icon="c-pencil-square" link="#" spinner class="btn-ghost btn-sm" />
+            </x-slot:trigger>
+            <x-slot:content class="pop-small">
+                {{ __('Edit this page') }}
+            </x-slot:content>
+        </x-popover>
+        @endif
         @endauth
     </div>
 
-    <x-header title="{!! $page->title !!}" />
-
-    <div class="relative items-center w-full px-5 py-5 mx-auto prose md:px-12 max-w-7xl bg-red-500">
+   <x-page-header>
+    {{ __($page->title) }}
+</x-page-header>
+    <div class="relative items-center w-full px-5 py-5 mx-auto prose md:px-12 max-w-7xl ">
         {!! $page->body !!}
     </div>
-    {{-- <div class="flex justify-between">
-        <p>@lang('By ') {{ $post->user->name }}</p>
-        <em>
-            @if ($commentsCount > 0)
-                @lang('Number of comments: ') {{ $commentsCount }}
-            @else
-                @lang('No comments')
-            @endif
-        </em>
-    </div>
-
-    <div id="bottom" class="relative items-center w-full py-5 mx-auto md:px-12 max-w-7xl">
-        @if ($commentsCount > 0)
-            <div class="flex justify-center">
-                <x-button label="{{ $commentsCount > 1 ? __('View comments') : __('View comment') }}"
-                    wire:click="showComments" class="btn-outline" spinner />
-            </div>
-        @endif
-    </div> --}}
-
 </div>

@@ -8,18 +8,16 @@ new class() extends Component {};
 
 <footer class="p-10 text-white bg-cyan-700 footer bg-red-500">
     <nav>
-        <a href="{{ route('contact') }}" class="link link-hover">@lang('Contact')
-            <a href="{{ route('blog.index') }}" class="link link-hover">@lang('Blog')
+        <a href="{{ route('contact') }}" class="link link-hover">{{ __('Contact') }}</a>
+        <a href="{{ route('blog.index') }}" class="link link-hover">{{ __('Blog') }}</a>
     </nav>
     <nav>
-        <a href="{{ route('blog.pages.show', ['page' => 'privacy-policy']) }}" class="link link-hover">@lang('Privacy policy')</a>
-
-        <a href="{{ route('blog.pages.show', ['page' => 'legal-informations']) }}" class="link link-hover">@lang('Legal informations')</a>
-
+        <a href="{{ route('blog.pages.show', ['page' => 'privacy-policy']) }}" class="link link-hover">{{ __('Privacy policy') }}</a>
+        <a href="{{ route('blog.pages.show', ['page' => 'legal-notices']) }}" class="link link-hover">{{ __('Legal notices') }}</a>
     </nav>
 
     <nav>
-        <h6 class="footer-title">@lang('Social medias')</h6>
+        <h6 class="footer-title">{{ __('Social medias') }}</h6>
         <div class="grid grid-flow-col gap-4">
             <a href="#" target="_blank">
                 <svg

@@ -234,6 +234,7 @@
     "Legal informations": "Mentions légales",
     "Terms and conditions of sale": "Conditions générales de vente",
     "Privacy policy": "Politique de confidentiabilité",
+    "Legal notices": "Mentions lègales",
     "Environmental protection": "Respect de l'environnement",
     "Administrative mandate": "Mandat administratif",
     "Social medias": "Médias sociaux",
@@ -452,7 +453,10 @@
     "scheduled": "programmée",
     "Footer": "Pieds de page",
     "Edit a footer": "Modifier le pied de page",
-"Footer deleted with success.": "Pied de page supprimé avec succès.",
-"Create a new footer": "Créer un nouveau pied de page",
-"Are you sure to delete this footer?": "Etes-vous sûr de vouloir supprimer ce menu de pied de page ?"
-}
+    "Footer deleted with success.": "Pied de page supprimé avec succès.",
+    "Create a new footer": "Créer un nouveau pied de page",
+    "Are you sure to delete this footer?": "Etes-vous sûr de vouloir supprimer ce menu de pied de page ?"
+
+    }
+
+
