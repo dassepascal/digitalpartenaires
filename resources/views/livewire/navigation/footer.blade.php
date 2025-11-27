@@ -14,7 +14,7 @@ new class() extends Component {};
     <nav>
         <a href="{{ route('blog.pages.show', ['page' => 'privacy-policy']) }}" class="link link-hover">@lang('Privacy policy')</a>
 
-        <a href="{{ route('pages', ['page' => 'mentions-legales']) }}" class="link link-hover">@lang('Legal informations')</a>
+        <a href="{{ route('blog.pages.show', ['page' => 'legal-informations']) }}" class="link link-hover">@lang('Legal informations')</a>
 
     </nav>
 
